@@ -92,9 +92,9 @@ License: For each use you must have a valid license purchased only from above li
                                 <!--end::Mobile menu toggle-->
                                 <!--begin::Logo image-->
                                 <a href="{{ url('/') }}">
-                                    <img alt="Logo" src="{{ asset('frontend/assets/media/logos/logo.png') }}"
+                                    <img alt="Logo" src="{{ asset('frontend/assets/media/logos/diskominfo.png') }}"
                                         class="logo-default h-25px h-lg-30px" />
-                                    <img alt="Logo" src="{{ asset('frontend/assets/media/logos/logo.png') }}"
+                                    <img alt="Logo" src="{{ asset('frontend/assets/media/logos/diskominfo.png') }}"
                                         class="logo-sticky h-20px h-lg-25px" />
                                 </a>
                                 <!--end::Logo image-->
@@ -332,7 +332,8 @@ License: For each use you must have a valid license purchased only from above li
                                 KARAWANG</h4>
                             <div class="position-relative ps-6 pe-3 py-2">
                                 <div class="position-absolute start-0 top-0 w-4px h-100 rounded-2 bg-info"></div>
-                                <a href="#" class="mb-1 text-white text-hover-primary fw-bolder">Email</a>
+                                <a href="mailto:diskominfo@karawangkab.go.id"
+                                    class="mb-1 text-white text-hover-primary fw-bolder">Email</a>
                                 <div class="fs-7 text-muted fw-bolder">diskominfo@karawangkab.go.id</div>
                             </div>
                             <div class="position-relative ps-6 pe-3 py-2 mt-2">
