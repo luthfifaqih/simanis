@@ -110,8 +110,9 @@ License: For each use you must have a valid license purchased only from above li
                         <!--begin::Wrapper-->
                         <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
                             <!--begin::Form-->
-                            <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"
-                                data-kt-redirect-url="../../demo8/dist/index.html" action="#">
+                            <form action="{{ route('actionlogin') }}" method="POST" class="form w-100"
+                                novalidate="novalidate" id="kt_sign_in_form">
+                                @csrf
                                 <!--begin::Heading-->
                                 <div class="text-center mb-11">
                                     <!--begin::Title-->
@@ -131,15 +132,16 @@ License: For each use you must have a valid license purchased only from above li
                                 <!--begin::Input group=-->
                                 <div class="fv-row mb-8">
                                     <!--begin::Email-->
-                                    <input type="text" placeholder="Email" name="email" autocomplete="off"
-                                        class="form-control bg-transparent" />
+                                    <input type="text" placeholder="Masukan email" name="email" autocomplete="off"
+                                        class="form-control bg-transparent" value="{{ old('email') }}" />
                                     <!--end::Email-->
                                 </div>
                                 <!--end::Input group=-->
                                 <div class="fv-row mb-3">
                                     <!--begin::Password-->
-                                    <input type="password" placeholder="Password" name="password" autocomplete="off"
-                                        class="form-control bg-transparent" />
+                                    <input type="password" placeholder="Masukan kata sandi" name="password"
+                                        autocomplete="off" class="form-control bg-transparent"
+                                        value="{{ old('password') }}" />
                                     <!--end::Password-->
                                 </div>
                                 <!--end::Input group=-->
@@ -156,7 +158,7 @@ License: For each use you must have a valid license purchased only from above li
                                 <div class="d-grid mb-10">
                                     <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
                                         <!--begin::Indicator label-->
-                                        <span class="indicator-label">Sign In</span>
+                                        <span class="indicator-label">Masuk</span>
                                         <!--end::Indicator label-->
                                         <!--begin::Indicator progress-->
                                         <span class="indicator-progress">Please wait...
@@ -168,7 +170,7 @@ License: For each use you must have a valid license purchased only from above li
                                 <!--end::Submit button-->
                                 <!--begin::Sign up-->
                                 <div class="text-gray-500 text-center fw-semibold fs-6">Belum punya akun?
-                                    <a href="#" class="link-primary">Buat akun</a>
+                                    <a href="{{ route('register') }}" class="link-primary">Buat akun</a>
                                 </div>
                                 <!--end::Sign up-->
                             </form>

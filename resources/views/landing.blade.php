@@ -92,9 +92,9 @@ License: For each use you must have a valid license purchased only from above li
                                 <!--end::Mobile menu toggle-->
                                 <!--begin::Logo image-->
                                 <a href="{{ url('/') }}">
-                                    <img alt="Logo" src="{{ asset('frontend/assets/media/logos/diskominfo.png') }}"
+                                    <img alt="Logo" src="{{ asset('frontend/assets/media/logos/logo.png') }}"
                                         class="logo-default h-25px h-lg-30px" />
-                                    <img alt="Logo" src="{{ asset('frontend/assets/media/logos/diskominfo.png') }}"
+                                    <img alt="Logo" src="{{ asset('frontend/assets/media/logos/logo.png') }}"
                                         class="logo-sticky h-20px h-lg-25px" />
                                 </a>
                                 <!--end::Logo image-->
@@ -314,7 +314,8 @@ License: For each use you must have a valid license purchased only from above li
                             <!--begin::Text-->
                             <iframe
                                 src="https://www.google.com/maps/embed/v1/place?q=Dinas+Komunikasi+dan+Informatika+Kab+Karawang,+Jalan+Jenderal+Ahmad+Yani,+Nagasari,+Karawang,+West+Java,+Indonesia&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"
-                                width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"
+                                width="100%" height="350" style="border:0; border-radius: 8px;"
+                                allowfullscreen="" loading="lazy"
                                 referrerpolicy="no-referrer-when-downgrade"></iframe>
                             <!--end::Text-->
                         </div>
@@ -368,7 +369,7 @@ License: For each use you must have a valid license purchased only from above li
                 <div class="row py-7 py-lg-10">
                     <div class="col-12 col-md-3">
                         <div class="d-flex justify-content-center">
-                            <a href="#" class="mx-5">
+                            <a href="https://diskominfo.karawangkab.go.id/" class="mx-5">
                                 <img alt="Logo" src="{{ asset('frontend/assets/media/logos/logo.png') }}"
                                     class="logo-default h-40px h-lg-40px" />
                             </a>
@@ -381,7 +382,7 @@ License: For each use you must have a valid license purchased only from above li
                     <div class="col-12 col-md-9">
                         <div class="d-flex justify-content-start">
                             <span class="mx-5 fs-6 fw-semibold text-warning pt-5"
-                                href="https://siriska.karawangkab.go.id">&copy; 2024
+                                href="https://diskominfo.karawangkab.go.id/">&copy; 2024
                                 Diskominfo Kabupaten Karawang.</span>
                         </div>
                     </div>
