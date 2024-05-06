@@ -16,10 +16,16 @@ License: For each use you must have a valid license purchased only from above li
 
 <head>
     <base href="" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', $title) | SIMANIS</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('frontend/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <link href="{{ asset('frontend/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
         type="text/css" />
-    <script src="{{ asset('frontend/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"> --}}
+    {{-- <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script> --}}
+    {{-- <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script> --}}
+
     <meta charset="utf-8" />
     <meta name="description"
         content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />

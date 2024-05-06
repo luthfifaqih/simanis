@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,3 +27,5 @@ Route::post('actionregister', [AuthController::class, 'actionregister'])->name('
 Route::get('logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware('auth');
+
+Route::resource('users', UserController::class);

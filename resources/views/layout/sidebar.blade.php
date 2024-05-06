@@ -20,7 +20,8 @@
                     <!--begin::Info-->
                     <div class="flex-grow-1 me-2">
                         <!--begin::Username-->
-                        <a href="#" class="text-white text-hover-primary fs-6 fw-bold">Paul Melone</a>
+                        <a href="#"
+                            class="text-white text-hover-primary fs-6 fw-bold">{{ Auth::user()->name }}</a>
                         <!--end::Username-->
                         <!--begin::Description-->
                         <span class="text-gray-600 fw-semibold d-block fs-8 mb-1">Python Dev</span>
@@ -57,7 +58,8 @@
                                     <!--end::Avatar-->
                                     <!--begin::Username-->
                                     <div class="d-flex flex-column">
-                                        <div class="fw-bold d-flex align-items-center fs-5">Max Smith </div>
+                                        <div class="fw-bold d-flex align-items-center fs-5">{{ Auth::user()->name }}
+                                        </div>
                                         <a href="#"
                                             class="fw-semibold text-muted text-hover-primary fs-7">max@kt.com</a>
                                     </div>
@@ -149,7 +151,7 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link" href="#">
+                    <a class="menu-link" href="{{ route('users.index') }}">
                         <span class="menu-icon">
                             <i class="ki-duotone ki-profile-circle fs-2">
                                 <span class="path1"></span>
