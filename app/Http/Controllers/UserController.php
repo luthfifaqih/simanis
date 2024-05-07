@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
@@ -22,8 +23,15 @@ class UserController extends Controller
                                         Pilih Aksi
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="actionDropdown' . $data->id . '">
-                                        <li><a class="dropdown-item" href="' . route('users.edit', $data->id) . '"><i class="bi bi-pencil-square"></i> Edit</a></li>
-                                        <li><button type="button" class="delete-btn dropdown-item" data-id="' . $data->id . '"><i class="bi bi-backspace-reverse-fill"></i> Delete</button></li>
+                                        <li><a class="dropdown-item" href="' . route('users.edit', $data->id) . '"><i class="ki-duotone ki-pencil fs-5">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i> Edit</a></li>
+                                        <li><button type="button" class="delete-btn dropdown-item" data-id="' . $data->id . '"><i class="ki-duotone ki-tag-cross fs-5">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                        </i> Delete</button></li>
                                     </ul>
                                 </div>';
                     return $button;
@@ -32,37 +40,54 @@ class UserController extends Controller
                 ->make(true);
         }
         return view('users.index', $title);
+    }
 
-        // if ($request->ajax()) {
-        //     $data = User::select('id', 'name', 'email');
+    public function create()
+    {
+        $title['title'] = 'Form Tambah User';
+        return view('users.create', $title);
+    }
 
-        //     // Filter berdasarkan pencarian
-        //     if (!empty($request->search['value'])) {
-        //         $search = $request->search['value'];
-        //         $data = $data->where('name', 'like', "%$search%")
-        //             ->orWhere('email', 'like', "%$search%");
-        //     }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'password_confirm' => 'required|same:password',
+        ]);
 
-        //     // Load data
-        //     $users = $data->get();
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
 
-        //     return DataTables::of($users)
-        //         ->addColumn('action', function ($user) {
-        //             $button = '<div class="dropdown">
-        //                             <button class="btn btn-primary dropdown-toggle" type="button" id="actionDropdown' . $user->id . '" data-bs-toggle="dropdown" aria-expanded="false">
-        //                                 Pilih Aksi
-        //                             </button>
-        //                             <ul class="dropdown-menu" aria-labelledby="actionDropdown' . $user->id . '">
-        //                                 <li><a class="dropdown-item" href="' . route('users.edit', $user->id) . '"><i class="bi bi-pencil-square"></i> Edit</a></li>
-        //                                 <li><button type="button" class="delete-btn dropdown-item" data-id="' . $user->id . '"><i class="bi bi-backspace-reverse-fill"></i> Delete</button></li>
-        //                             </ul>
-        //                         </div>';
-        //             return $button;
-        //         })
-        //         ->rawColumns(['action'])
-        //         ->make(true);
-        // }
+        return redirect('users')->with('success', 'User created successfully');
+    }
 
-        // return view('users.index', $title);
+    public function edit(User $user)
+    {
+        $title['title'] = 'Form Edit User';
+        return view('users.edit', compact('user'), $title);
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $validate = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'password_confirm' => 'required|same:password',
+        ]);
+
+        $user->update($request->all());
+        return redirect()->route('users.index')->with('success', 'User updated successfully');
+    }
+
+    public function destroy($id)
+    {
+        $user = User::where('id', $id)->delete();
+        return response()->json($user);
     }
 }

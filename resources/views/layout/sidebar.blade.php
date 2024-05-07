@@ -78,8 +78,8 @@
                             <!--end::Menu item-->
                             <!--begin::Menu item-->
                             <div class="menu-item px-5">
-                                <a href="{{ route('logout') }}" class="menu-link px-5" onclick="confirmLogout()">Sign
-                                    Out</a>
+                                <a href="{{ route('logout') }}" class="menu-link px-5"
+                                    onclick="confirmLogout()">Keluar</a>
                             </div>
                             <!--end::Menu item-->
                         </div>
@@ -107,7 +107,7 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link" href="../../demo8/dist/apps/calendar.html">
+                    <a class="menu-link" href="{{ route('dashboard') }}">
                         <span class="menu-icon">
                             <i class="ki-duotone ki-element-11 fs-2">
                                 <span class="path1"></span>
@@ -127,7 +127,7 @@
                 <div class="menu-item pt-5">
                     <!--begin:Menu content-->
                     <div class="menu-content">
-                        <span class="menu-heading fw-bold text-uppercase fs-7">Menu</span>
+                        <span class="menu-heading fw-bold text-uppercase fs-7">Menu Pengajuan</span>
                     </div>
                     <!--end:Menu content-->
                 </div>
@@ -146,6 +146,15 @@
                         <span class="menu-title">Upload Persyaratan</span>
                     </a>
                     <!--end:Menu link-->
+                </div>
+                <!--end:Menu item-->
+                <!--begin:Menu item-->
+                <div class="menu-item pt-5">
+                    <!--begin:Menu content-->
+                    <div class="menu-content">
+                        <span class="menu-heading fw-bold text-uppercase fs-7">Menu Administration</span>
+                    </div>
+                    <!--end:Menu content-->
                 </div>
                 <!--end:Menu item-->
                 <!--begin:Menu item-->
@@ -179,6 +188,21 @@
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
+                <div class="separator border-2 my-5"></div>
+                <!--begin:Menu item-->
+                <div class="menu-item">
+                    <!--begin:Menu link-->
+                    <a href="{{ route('logout') }}" class="menu-link" onclick="confirmLogout()">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-exit-left fs-2">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">Keluar</span>
+                    </a>
+                    <!--end:Menu link-->
+                </div>
             </div>
             <!--end::Menu-->
         </div>
