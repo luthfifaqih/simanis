@@ -24,7 +24,7 @@
                             class="text-white text-hover-primary fs-6 fw-bold">{{ Auth::user()->name }}</a>
                         <!--end::Username-->
                         <!--begin::Description-->
-                        <span class="text-gray-600 fw-semibold d-block fs-8 mb-1">Python Dev</span>
+                        <span class="text-gray-600 fw-semibold d-block fs-8 mb-1">{{ Auth::user()->role }}</span>
                         <!--end::Description-->
                         <!--begin::Label-->
                         <div class="d-flex align-items-center text-success fs-9">
@@ -61,7 +61,7 @@
                                         <div class="fw-bold d-flex align-items-center fs-5">{{ Auth::user()->name }}
                                         </div>
                                         <a href="#"
-                                            class="fw-semibold text-muted text-hover-primary fs-7">max@kt.com</a>
+                                            class="fw-semibold text-muted text-hover-primary fs-7">{{ Auth::user()->role }}</a>
                                     </div>
                                     <!--end::Username-->
                                 </div>
@@ -104,105 +104,218 @@
             <!--begin::Menu-->
             <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500"
                 id="#kt_aside_menu" data-kt-menu="true">
-                <!--begin:Menu item-->
-                <div class="menu-item">
-                    <!--begin:Menu link-->
-                    <a class="menu-link" href="{{ route('dashboard') }}">
-                        <span class="menu-icon">
-                            <i class="ki-duotone ki-element-11 fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                                <span class="path4"></span>
-                                <span class="path5"></span>
-                                <span class="path6"></span>
-                            </i>
-                        </span>
-                        <span class="menu-title">Dashboard</span>
-                    </a>
-                    <!--end:Menu link-->
-                </div>
-                <!--end:Menu item-->
-                <!--begin:Menu item-->
-                <div class="menu-item pt-5">
-                    <!--begin:Menu content-->
-                    <div class="menu-content">
-                        <span class="menu-heading fw-bold text-uppercase fs-7">Menu Pengajuan</span>
+
+                @if (in_array(Auth::user()->role, ['kadis', 'superadmin', 'verifikator']))
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('dashboard') }}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-element-11 fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                    <span class="path4"></span>
+                                    <span class="path5"></span>
+                                    <span class="path6"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Dashboard</span>
+                        </a>
+                        <!--end:Menu link-->
                     </div>
-                    <!--end:Menu content-->
-                </div>
-                <!--end:Menu item-->
-                <!--begin:Menu item-->
-                <div class="menu-item">
-                    <!--begin:Menu link-->
-                    <a class="menu-link" href="#">
-                        <span class="menu-icon">
-                            <i class="ki-duotone ki-document fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                            </i>
-                        </span>
-                        <span class="menu-title">Upload Persyaratan</span>
-                    </a>
-                    <!--end:Menu link-->
-                </div>
-                <!--end:Menu item-->
-                <!--begin:Menu item-->
-                <div class="menu-item pt-5">
-                    <!--begin:Menu content-->
-                    <div class="menu-content">
-                        <span class="menu-heading fw-bold text-uppercase fs-7">Menu Administration</span>
+                    <!--end:Menu item-->
+                @endif
+
+                {{-- Menu Super admin --}}
+                @if (Auth::user()->role == 'superadmin')
+                    <!--begin:Menu item-->
+                    <div class="menu-item pt-5">
+                        <!--begin:Menu content-->
+                        <div class="menu-content">
+                            <span class="menu-heading fw-bold text-uppercase fs-7">Menu Pengajuan</span>
+                        </div>
+                        <!--end:Menu content-->
                     </div>
-                    <!--end:Menu content-->
-                </div>
-                <!--end:Menu item-->
-                <!--begin:Menu item-->
-                <div class="menu-item">
-                    <!--begin:Menu link-->
-                    <a class="menu-link" href="{{ route('users.index') }}">
-                        <span class="menu-icon">
-                            <i class="ki-duotone ki-profile-circle fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                            </i>
-                        </span>
-                        <span class="menu-title">Data User</span>
-                    </a>
-                    <!--end:Menu link-->
-                </div>
-                <!--end:Menu item-->
-                <!--begin:Menu item-->
-                <div class="menu-item">
-                    <!--begin:Menu link-->
-                    <a class="menu-link" href="https://preview.keenthemes.com/html/metronic/docs" target="_blank">
-                        <span class="menu-icon">
-                            <i class="ki-duotone ki-abstract-26 fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                            </i>
-                        </span>
-                        <span class="menu-title">Documentation</span>
-                    </a>
-                    <!--end:Menu link-->
-                </div>
-                <!--end:Menu item-->
-                <div class="separator border-2 my-5"></div>
-                <!--begin:Menu item-->
-                <div class="menu-item">
-                    <!--begin:Menu link-->
-                    <a href="{{ route('logout') }}" class="menu-link" onclick="confirmLogout()">
-                        <span class="menu-icon">
-                            <i class="ki-duotone ki-exit-left fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                            </i>
-                        </span>
-                        <span class="menu-title">Keluar</span>
-                    </a>
-                    <!--end:Menu link-->
-                </div>
+                    <!--end:Menu item-->
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="#">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-document fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Upload Persyaratan</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    <!--end:Menu item-->
+                    <!--begin:Menu item-->
+                    <div class="menu-item pt-5">
+                        <!--begin:Menu content-->
+                        <div class="menu-content">
+                            <span class="menu-heading fw-bold text-uppercase fs-7">Menu Administration</span>
+                        </div>
+                        <!--end:Menu content-->
+                    </div>
+                    <!--end:Menu item-->
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('users.index') }}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-profile-circle fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Data User</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    <!--end:Menu item-->
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="https://preview.keenthemes.com/html/metronic/docs" target="_blank">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-abstract-26 fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Documentation</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    <!--end:Menu item-->
+                    <div class="separator border-2 my-5"></div>
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a href="{{ route('logout') }}" class="menu-link" onclick="confirmLogout()">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-exit-left fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Keluar</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                @endif
+
+                {{-- Menu Kadis --}}
+                @if (Auth::user()->role == 'kadis')
+                    <!--begin:Menu item-->
+                    <div class="menu-item pt-5">
+                        <!--begin:Menu content-->
+                        <div class="menu-content">
+                            <span class="menu-heading fw-bold text-uppercase fs-7">Menu Administration</span>
+                        </div>
+                        <!--end:Menu content-->
+                    </div>
+                    <!--end:Menu item-->
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('users.index') }}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-profile-circle fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Data User</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    <!--end:Menu item-->
+                    <div class="separator border-2 my-5"></div>
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a href="{{ route('logout') }}" class="menu-link" onclick="confirmLogout()">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-exit-left fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Keluar</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                @endif
+
+                {{-- Menu Verifikator --}}
+                @if (Auth::user()->role == 'verifikator')
+                    <div class="separator border-2 my-5"></div>
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a href="{{ route('logout') }}" class="menu-link" onclick="confirmLogout()">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-exit-left fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Keluar</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                @endif
+
+                {{-- Menu Pers --}}
+                @if (Auth::user()->role == 'pers')
+                    <div class="menu-item pt-5">
+                        <!--begin:Menu content-->
+                        <div class="menu-content">
+                            <span class="menu-heading fw-bold text-uppercase fs-7">Menu Pengajuan</span>
+                        </div>
+                        <!--end:Menu content-->
+                    </div>
+                    <!--end:Menu item-->
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="#">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-document fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Upload Persyaratan</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    <!--end:Menu item-->
+                    <div class="separator border-2 my-5"></div>
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a href="{{ route('logout') }}" class="menu-link" onclick="confirmLogout()">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-exit-left fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Keluar</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                @endif
             </div>
             <!--end::Menu-->
         </div>

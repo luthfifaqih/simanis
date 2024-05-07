@@ -31,6 +31,7 @@
                                     <tr class="fw-semibold fs-6 text-gray-800">
                                         <th class="min-w-200px">Name</th>
                                         <th class="min-w-150px">Email</th>
+                                        <th class="min-w-150px">Role</th>
                                         <th class="min-w-200px">Action</th>
                                     </tr>
                                 </thead>
@@ -68,6 +69,10 @@
                 {
                     data: 'email',
                     name: 'email'
+                },
+                {
+                    data: 'role',
+                    name: 'role'
                 },
                 {
                     data: 'action',

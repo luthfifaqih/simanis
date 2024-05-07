@@ -14,7 +14,7 @@ class UserController extends Controller
         $title['title'] = 'Data User';
 
         if ($request->ajax()) {
-            $data = User::select('id', 'name', 'email');
+            $data = User::select('id', 'name', 'email', 'role');
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
@@ -53,6 +53,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required',
+            'role' => 'required',
             'password' => 'required',
             'password_confirm' => 'required|same:password',
         ]);
@@ -60,6 +61,7 @@ class UserController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->role = $request->role;
         $user->password = Hash::make($request->password);
         $user->save();
 

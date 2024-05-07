@@ -36,6 +36,25 @@
 
                             <!--begin::Input group--->
                             <div class="fv-row mb-10">
+                                <!--begin::Label-->
+                                <label class="required form-label fs-6 mb-2">Pilih Role</label>
+                                <!--end::Label-->
+
+                                <!--begin::Select2-->
+                                <select class="form-select" name="role" data-control="select2"
+                                    data-placeholder="Select an option">
+                                    <option></option>
+                                    <option value="superadmin">Super Admin</option>
+                                    <option value="kadis">Kadis</option>
+                                    <option value="verifikator">Verifikator</option>
+                                    <option value="pers">Pers</option>
+                                </select>
+                                <!--begin::Select2-->
+                            </div>
+                            <!--end::Input group--->
+
+                            <!--begin::Input group--->
+                            <div class="fv-row mb-10">
                                 <label class="required form-label fs-6 mb-2">Password</label>
 
                                 <input class="form-control form-control-lg form-control-solid" type="password"

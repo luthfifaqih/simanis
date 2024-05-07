@@ -12,6 +12,12 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+
+    const ROLE_PERS = 'pers';
+    const ROLE_SUPERADMIN = 'superadmin';
+    const ROLE_KADIS = 'kadis';
+    const ROLE_VERIFIKATOR = 'verifikator';
+
     protected $table = 'users';
     protected $guarded = [];
     protected $primaryKey = 'id';
@@ -25,6 +31,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**

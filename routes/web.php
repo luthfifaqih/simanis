@@ -26,6 +26,23 @@ Route::get('register', [AuthController::class, 'register'])->name('register');
 Route::post('actionregister', [AuthController::class, 'actionregister'])->name('actionregister');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
-Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware('auth');
 
-Route::resource('users', UserController::class);
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware('auth');
+
+    //superadmin
+    Route::group(['middleware' => ['role:superadmin']], function () {
+        Route::resource('users', UserController::class);
+    });
+    //kadis
+    Route::group(['middleware' => ['role:kadis']], function () {
+        Route::resource('users', UserController::class);
+    });
+    //verifikator
+    Route::group(['middleware' => ['role:verifikator']], function () {
+    });
+    //pers
+    Route::group(['middleware' => ['role:pers']], function () {
+    });
+});
