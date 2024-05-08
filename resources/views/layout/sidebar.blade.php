@@ -10,7 +10,7 @@
         <div class="aside-user d-flex align-items-sm-center justify-content-center py-5">
             <!--begin::Symbol-->
             <div class="symbol symbol-50px">
-                <img src="{{ asset('frontend/assets/media/avatars/300-1.jpg') }}" alt="" />
+                <img src="https://ditensi-rd.baleprasutisingaperbangsa.com/assets/avatar/avatar.png" alt="" />
             </div>
             <!--end::Symbol-->
             <!--begin::Wrapper-->
@@ -53,7 +53,7 @@
                                     <!--begin::Avatar-->
                                     <div class="symbol symbol-50px me-5">
                                         <img alt="Logo"
-                                            src="{{ asset('frontend/assets/media/avatars/300-1.jpg') }}" />
+                                            src="https://ditensi-rd.baleprasutisingaperbangsa.com/assets/avatar/avatar.png" />
                                     </div>
                                     <!--end::Avatar-->
                                     <!--begin::Username-->
@@ -164,6 +164,50 @@
                     </div>
                     <!--end:Menu item-->
                     <!--begin:Menu item-->
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <!--begin:Menu link-->
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-notepad-edit fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Verifikasi</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <!--end:Menu link-->
+                        <!--begin:Menu sub-->
+                        <div class="menu-sub menu-sub-accordion">
+                            <!--begin:Menu item-->
+                            <div class="menu-item">
+                                <!--begin:Menu link-->
+                                <a class="menu-link" href="#">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Verifikasi Persyaratan</span>
+                                </a>
+                                <!--end:Menu link-->
+                            </div>
+                            <!--end:Menu item-->
+                            <!--begin:Menu item-->
+                            <div class="menu-item">
+                                <!--begin:Menu link-->
+                                <a class="menu-link" href="#">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">TTE Pengajuan</span>
+                                </a>
+                                <!--end:Menu link-->
+                            </div>
+                            <!--end:Menu item-->
+                        </div>
+                        <!--end:Menu sub-->
+                    </div>
+                    <!--end:Menu item-->
+                    <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
                         <a class="menu-link" href="{{ route('users.index') }}">
@@ -175,21 +219,6 @@
                                 </i>
                             </span>
                             <span class="menu-title">Data User</span>
-                        </a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="https://preview.keenthemes.com/html/metronic/docs" target="_blank">
-                            <span class="menu-icon">
-                                <i class="ki-duotone ki-abstract-26 fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
-                            </span>
-                            <span class="menu-title">Documentation</span>
                         </a>
                         <!--end:Menu link-->
                     </div>
@@ -222,20 +251,35 @@
                         <!--end:Menu content-->
                     </div>
                     <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ route('users.index') }}">
+                        <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-profile-circle fs-2">
+                                <i class="ki-duotone ki-notepad-edit fs-2">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
-                                    <span class="path3"></span>
                                 </i>
                             </span>
-                            <span class="menu-title">Data User</span>
-                        </a>
+                            <span class="menu-title">Verifikasi</span>
+                            <span class="menu-arrow"></span>
+                        </span>
                         <!--end:Menu link-->
+                        <!--begin:Menu sub-->
+                        <div class="menu-sub menu-sub-accordion">
+                            <!--begin:Menu item-->
+                            <div class="menu-item">
+                                <!--begin:Menu link-->
+                                <a class="menu-link" href="#">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">TTE Pengajuan</span>
+                                </a>
+                                <!--end:Menu link-->
+                            </div>
+                            <!--end:Menu item-->
+                        </div>
+                        <!--end:Menu sub-->
                     </div>
                     <!--end:Menu item-->
                     <div class="separator border-2 my-5"></div>

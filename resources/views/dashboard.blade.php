@@ -7,7 +7,38 @@
         <div class="post d-flex flex-column-fluid" id="kt_post">
             <!--begin::Container-->
             <div id="kt_content_container" class="container-xxl">
-                <!--begin::Row-->
+                {{-- Card --}}
+                <div class="card mb-8">
+                    <div class="card-body shadow mw-100 pt-9 pb-0" style="border-radius: 5px">
+                        <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
+                            <div class="me-7 mb-4 d-flex align-items-center ">
+                                <div
+                                    class="symbol symbol-100px symbol-lg-100px symbol-fixed position-relative d-flex align-items-center ">
+                                    <img src="https://ditensi-rd.baleprasutisingaperbangsa.com/assets/avatar/avatar.png"
+                                        alt="Avatar" />
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                                    <div class="d-flex flex-column">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="fw-light text-dark -900 text-hover-primary  fs-2 fw-bolder me-1">Hi,
+                                                {{ Auth::user()->name }}
+                                                <br><small class="fw-light">Selamat datang kembali ke Aplikasi </small>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 mb-2">
+                                            <label class="fs-5">Anda terdaftar pada aplikasi sebagai : </label> <br />
+                                            <span
+                                                class="badge badge-light-primary border border-primary me-2 mb-3 fs-5">{{ Auth::user()->role }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- <!--begin::Row-->
                 <div class="row g-5 g-xl-8">
                     <div class="col-xl-4">
                         <!--begin::Statistics Widget 5-->
@@ -64,9 +95,9 @@
                         <!--end::Statistics Widget 5-->
                     </div>
                 </div>
-                <!--end::Row-->
+                <!--end::Row--> --}}
                 <!--begin::Row-->
-                <div class="row g-5 g-xl-8">
+                {{-- <div class="row g-5 g-xl-8">
                     <!--begin::Col-->
                     <div class="col-xl-4">
                         <!--begin::List Widget 1-->
@@ -794,10 +825,10 @@
                         <!--end::Tables Widget 5-->
                     </div>
                     <!--end::Col-->
-                </div>
+                </div> --}}
                 <!--end::Row-->
                 <!--begin::Row-->
-                <div class="row g-5 g-xl-8">
+                {{-- <div class="row g-5 g-xl-8">
                     <div class="col-xl-4">
                         <!--begin::List Widget 3-->
                         <div class="card card-xl-stretch mb-xl-8">
@@ -1165,10 +1196,10 @@
                         </div>
                         <!--end::Charts Widget 1-->
                     </div>
-                </div>
+                </div> --}}
                 <!--end::Row-->
                 <!--begin::Row-->
-                <div class="row g-5 g-xl-8">
+                {{-- <div class="row g-5 g-xl-8">
                     <div class="col-xl-6">
                         <!--begin::List Widget 7-->
                         <div class="card card-xl-stretch mb-xl-8">
@@ -1569,7 +1600,7 @@
                         </div>
                         <!--end::List Widget 6-->
                     </div>
-                </div>
+                </div> --}}
                 <!--end::Row-->
             </div>
             <!--end::Container-->
