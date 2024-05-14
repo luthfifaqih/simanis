@@ -22,7 +22,8 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required',
             'password' => 'required',
-            'password_confirm' => 'required|same:password'
+            'password_confirm' => 'required|same:password',
+            'g-recaptcha-response' => 'required|captcha',
         ]);
 
         $user = new User([
@@ -46,16 +47,19 @@ class AuthController extends Controller
     {
         $request->validate([
             'email' => 'required',
-            'password' => 'required'
+            'password' => 'required',
+            'g-recaptcha-response' => 'required|captcha'
         ]);
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $request->session()->regenerate();
             return redirect()->intended('dashboard');
+            // return response()->json(['success' => true]);
         }
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ]);
+        // return response()->json(['success' => false, 'message' => 'Email atau password salah.']);
     }
 
     public function logout(Request $request)

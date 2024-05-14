@@ -16,8 +16,15 @@ License: For each use you must have a valid license purchased only from above li
 
 <head>
     <base href="" />
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="3VBKgT9vjkAD39bqGCHbtfKyQ8JMpa7nQLFaheiW">
     <title>@yield('title', $title) | SIMANIS</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="{{ asset('frontend/assets/plugins/global/plugins.bundle.js') }}"></script>
+    <link href="{{ asset('frontend/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <meta charset="utf-8" />
     <meta name="description"
         content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
@@ -131,13 +138,22 @@ License: For each use you must have a valid license purchased only from above li
                                 </div>
                                 <!--end::Separator-->
                                 <!--begin::Input group=-->
-                                <div class="fv-row mb-8">
+                                <div class="fv-row mb-3">
                                     <!--begin::Email-->
                                     <input type="text" placeholder="Masukan email" name="email" autocomplete="off"
                                         class="form-control bg-transparent" value="{{ old('email') }}" />
                                     <!--end::Email-->
                                 </div>
                                 <!--end::Input group=-->
+                                <!--begin::Wrapper-->
+                                <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-3">
+                                    <div></div>
+                                    <!--begin::Link-->
+                                    <a href="#" class="link-primary">Lupa kata sandi ?</a>
+                                    <!--end::Link-->
+                                </div>
+                                <!--end::Wrapper-->
+                                <!--begin::Input group=-->
                                 <div class="fv-row mb-3">
                                     <!--begin::Password-->
                                     <input type="password" placeholder="Masukan kata sandi" name="password"
@@ -146,19 +162,23 @@ License: For each use you must have a valid license purchased only from above li
                                     <!--end::Password-->
                                 </div>
                                 <!--end::Input group=-->
-                                <!--begin::Wrapper-->
-                                <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
-                                    <div></div>
-                                    <!--begin::Link-->
-                                    <a href="../../demo8/dist/authentication/layouts/overlay/reset-password.html"
-                                        class="link-primary">Lupa kata sandi ?</a>
-                                    <!--end::Link-->
+                                {{-- Captcha --}}
+                                <div class="fv-row mb-10 text-center">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-6" style="display:flex;min-height:50px;">
+                                        {!! NoCaptcha::display() !!}
+                                        {!! NoCaptcha::renderJs() !!}
+                                        @error('g-recaptcha-response')
+                                            <span class="text-danger" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                 </div>
-                                <!--end::Wrapper-->
+                                {{-- Captcha --}}
                                 <!--begin::Submit button-->
                                 <div class="d-grid mb-10">
-                                    <button type="submit" id="kt_sign_in_submit" class="btn btn-primary"
-                                        onclick="masuk()">
+                                    <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
                                         <!--begin::Indicator label-->
                                         <span class="indicator-label">Masuk</span>
                                         <!--end::Indicator label-->
@@ -191,21 +211,10 @@ License: For each use you must have a valid license purchased only from above li
     <!--end::Root-->
     <!--end::Main-->
 
-    <!--begin::Javascript-->
-    <script>
-        function masuk() {
-            Swal.fire({
-                title: "Berhasil",
-                text: "Anda akan masuk ke aplikasi",
-                icon: "success"
-            });
-        }
-    </script>
     <script>
         var hostUrl = "assets/";
     </script>
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-    <script src="{{ asset('frontend/assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/scripts.bundle.js') }}"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Vendors Javascript(used for this page only)-->
@@ -217,6 +226,47 @@ License: For each use you must have a valid license purchased only from above li
     <script src="{{ asset('frontend/assets/js/custom/pages/pricing/general.js') }}"></script>
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
+
+    <!--begin::Javascript-->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("kt_sign_in_form").addEventListener("submit", function(event) {
+                event.preventDefault(); // Mencegah pengiriman formulir
+
+                var email = document.getElementsByName("email")[0].value;
+                var password = document.getElementsByName("password")[0].value;
+                var captcha = grecaptcha.getResponse();
+
+                if (email.trim() === '' || password.trim() === '') {
+                    // Tampilkan pesan error jika email atau password kosong
+                    Swal.fire({
+                        title: "Peringatan",
+                        text: "Email dan password harap diisi",
+                        icon: "error"
+                    });
+                } else if (captcha.length === 0) {
+                    // Tampilkan pesan error jika captcha tidak dicentang
+                    Swal.fire({
+                        title: "Info",
+                        text: "Captcha harus dicentang",
+                        icon: "info"
+                    });
+                } else {
+                    // Jika formulir diisi dengan benar, kirimkan formulir
+                    // Anda bisa uncomment baris ini jika ingin mengirimkan formulir secara otomatis
+                    this.submit();
+
+                    // Tampilkan pesan sukses jika login berhasil
+                    Swal.fire({
+                        title: "Berhasil",
+                        text: "Anda akan masuk ke aplikasi",
+                        icon: "success"
+                    });
+                }
+            });
+        });
+    </script>
+
 </body>
 <!--end::Body-->
 

@@ -20,8 +20,7 @@
                     <!--begin::Info-->
                     <div class="flex-grow-1 me-2">
                         <!--begin::Username-->
-                        <a href="#"
-                            class="text-white text-hover-primary fs-6 fw-bold">{{ Auth::user()->name }}</a>
+                        <a class="text-white text-hover-primary fs-6 fw-bold">{{ Auth::user()->name }}</a>
                         <!--end::Username-->
                         <!--begin::Description-->
                         <span class="text-gray-600 fw-semibold d-block fs-8 mb-1">{{ Auth::user()->role }}</span>

@@ -24,7 +24,7 @@
                                         <div class="d-flex align-items-center mb-2">
                                             <div class="fw-light text-dark -900 text-hover-primary  fs-2 fw-bolder me-1">Hi,
                                                 {{ Auth::user()->name }}
-                                                <br><small class="fw-light">Selamat datang kembali ke Aplikasi </small>
+                                                <br><small class="fw-light">Selamat datang di Aplikasi </small>
                                             </div>
                                         </div>
                                         <div class="mt-2 mb-2">

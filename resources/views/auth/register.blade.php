@@ -165,6 +165,20 @@ License: For each use you must have a valid license purchased only from above li
                                         <!--end::Repeat Password-->
                                     </div>
                                     <!--end::Input group=-->
+                                    {{-- Captcha --}}
+                                    <div class="fv-row mb-10 text-center">
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-6" style="display:flex;min-height:50px;">
+                                            {!! NoCaptcha::display() !!}
+                                            {!! NoCaptcha::renderJs() !!}
+                                            @error('g-recaptcha-response')
+                                                <span class="text-danger" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    {{-- Captcha --}}
                                     <!--begin::Submit button-->
                                     <div class="d-grid mb-10">
                                         <button type="submit" id="kt_sign_up_submit" class="btn btn-primary"
@@ -203,13 +217,64 @@ License: For each use you must have a valid license purchased only from above li
 
     <!--begin::Javascript-->
     <script>
-        function register() {
-            Swal.fire({
-                title: "Berhasil",
-                text: "Akun telah dibuat silahkan login",
-                icon: "success"
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("kt_sign_up_form").addEventListener("submit", function(event) {
+                event.preventDefault(); // Mencegah pengiriman formulir
+
+                var name = document.getElementsByName("name")[0].value;
+                var email = document.getElementsByName("email")[0].value;
+                var password = document.getElementsByName("password")[0].value;
+                var password_confirm = document.getElementsByName("password_confirm")[0].value;
+                var captcha = grecaptcha.getResponse();
+
+                if (name.trim() === '' || email.trim() === '' || password.trim() === '' || password_confirm
+                    .trim() === '') {
+                    // Tampilkan pesan error jika ada field yang kosong
+                    Swal.fire({
+                        title: "Peringatan",
+                        text: "Nama, email, dan password harus diisi",
+                        icon: "error"
+                    });
+                } else if (password !== password_confirm) {
+                    // Tampilkan pesan error jika password dan konfirmasi password tidak sesuai
+                    Swal.fire({
+                        title: "Peringatan",
+                        text: "Password dan konfirmasi password tidak sesuai",
+                        icon: "error"
+                    });
+                } else if (captcha.length === 0) {
+                    // Tampilkan pesan error jika captcha tidak dicentang
+                    Swal.fire({
+                        title: "Info",
+                        text: "Captcha harus dicentang",
+                        icon: "info"
+                    });
+                } else {
+                    // Jika formulir diisi dengan benar, kirimkan formulir
+                    // Anda bisa uncomment baris ini jika ingin mengirimkan formulir secara otomatis
+                    this.submit();
+
+                    // Tampilkan pesan sukses jika registrasi berhasil
+                    Swal.fire({
+                        title: "Berhasil",
+                        text: "Registrasi berhasil. Anda akan dialihkan ke halaman login.",
+                        icon: "success"
+                    }).then((result) => {
+                        // Redirect ke halaman login setelah menutup alert
+                        if (result.isConfirmed || result.isDismissed) {
+                            window.location.href = "{{ route('login') }}";
+                        }
+                    });
+                }
             });
-        }
+        });
+        // function register() {
+        //     Swal.fire({
+        //         title: "Berhasil",
+        //         text: "Akun telah dibuat silahkan login",
+        //         icon: "success"
+        //     });
+        // }
     </script>
     <script>
         var hostUrl = "assets/";
