@@ -118,17 +118,35 @@ License: For each use you must have a valid license purchased only from above li
                         <!--begin::Wrapper-->
                         <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
                             <!--begin::Form-->
-                            <form action="{{ route('actionlogin') }}" method="POST" class="form w-100"
+                            <form action="{{ route('password.update') }}" method="POST" class="form w-100"
                                 novalidate="novalidate" id="kt_sign_in_form">
                                 @csrf
+
+                                <div class="form-group row mb-5">
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+                                    @if (session()->has('status'))
+                                        <div class="alert alert-success">
+                                            {{ session()->get('status') }}
+                                        </div>
+                                    @endif
+                                </div>
+
                                 <!--begin::Heading-->
                                 <div class="text-center mb-11">
                                     <!--begin::Title-->
-                                    <h1 class="text-dark fw-bolder mb-3">Masuk ke Aplikasi</h1>
+                                    <h1 class="text-dark fw-bolder mb-3">Reset Password</h1>
                                     <!--end::Title-->
                                     <!--begin::Subtitle-->
                                     <div class="text-gray-500 fw-semibold fs-6">Silahkan isi formulir berikut untuk
-                                        masuk ke aplikasi</div>
+                                        melakukan reset password aplikasi</div>
                                     <!--end::Subtitle=-->
                                 </div>
                                 <!--begin::Heading-->
@@ -137,51 +155,31 @@ License: For each use you must have a valid license purchased only from above li
                                     <i class="bi bi-check-square text-success fs-2"></i>
                                 </div>
                                 <!--end::Separator-->
-                                <!--begin::Input group=-->
-                                <div class="fv-row mb-3">
-                                    <!--begin::Email-->
-                                    <input type="text" placeholder="Masukan email" name="email" autocomplete="off"
-                                        class="form-control bg-transparent" value="{{ old('email') }}" />
-                                    <!--end::Email-->
-                                </div>
-                                <!--end::Input group=-->
-                                <!--begin::Wrapper-->
-                                <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-3">
-                                    <div></div>
-                                    <!--begin::Link-->
-                                    <a href="{{ route('password.request') }}" class="link-primary">Lupa kata sandi
-                                        ?</a>
-                                    <!--end::Link-->
-                                </div>
-                                <!--end::Wrapper-->
+                                <input type="hidden" name="token" value="{{ request()->token }}">
+                                <input type="hidden" name="email" value="{{ request()->email }}">
                                 <!--begin::Input group=-->
                                 <div class="fv-row mb-3">
                                     <!--begin::Password-->
                                     <input type="password" placeholder="Masukan kata sandi" name="password"
-                                        autocomplete="off" class="form-control bg-transparent"
-                                        value="{{ old('password') }}" />
+                                        autocomplete="off" class="form-control bg-transparent" required autofocus />
                                     <!--end::Password-->
                                 </div>
                                 <!--end::Input group=-->
-                                {{-- Captcha --}}
-                                <div class="fv-row mb-10 text-center">
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-6" style="display:flex;min-height:50px;">
-                                        {!! NoCaptcha::display() !!}
-                                        {!! NoCaptcha::renderJs() !!}
-                                        @error('g-recaptcha-response')
-                                            <span class="text-danger" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
+                                <!--begin::Input group=-->
+                                <div class="fv-row mb-3">
+                                    <!--begin::Password-->
+                                    <input type="password" placeholder="Masukan ulang kata sandi"
+                                        name="password_confirmation" autocomplete="off"
+                                        class="form-control bg-transparent" required autofocus />
+                                    <!--end::Password-->
                                 </div>
-                                {{-- Captcha --}}
+                                <!--end::Input group=-->
                                 <!--begin::Submit button-->
                                 <div class="d-grid mb-10">
-                                    <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
+                                    <button type="submit" id="kt_sign_in_submit" class="btn btn-primary"
+                                        onclick="reset()">
                                         <!--begin::Indicator label-->
-                                        <span class="indicator-label">Masuk</span>
+                                        <span class="indicator-label">Reset Password</span>
                                         <!--end::Indicator label-->
                                         <!--begin::Indicator progress-->
                                         <span class="indicator-progress">Please wait...
@@ -191,11 +189,6 @@ License: For each use you must have a valid license purchased only from above li
                                     </button>
                                 </div>
                                 <!--end::Submit button-->
-                                <!--begin::Sign up-->
-                                <div class="text-gray-500 text-center fw-semibold fs-6">Belum punya akun?
-                                    <a href="{{ route('register') }}" class="link-primary">Buat akun</a>
-                                </div>
-                                <!--end::Sign up-->
                             </form>
                             <!--end::Form-->
                         </div>
@@ -230,42 +223,49 @@ License: For each use you must have a valid license purchased only from above li
 
     <!--begin::Javascript-->
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("kt_sign_in_form").addEventListener("submit", function(event) {
-                event.preventDefault(); // Mencegah pengiriman formulir
-
-                var email = document.getElementsByName("email")[0].value;
-                var password = document.getElementsByName("password")[0].value;
-                var captcha = grecaptcha.getResponse();
-
-                if (email.trim() === '' || password.trim() === '') {
-                    // Tampilkan pesan error jika email atau password kosong
-                    Swal.fire({
-                        title: "Peringatan",
-                        text: "Email dan password harap diisi",
-                        icon: "error"
-                    });
-                } else if (captcha.length === 0) {
-                    // Tampilkan pesan error jika captcha tidak dicentang
-                    Swal.fire({
-                        title: "Info",
-                        text: "Captcha harus dicentang",
-                        icon: "info"
-                    });
-                } else {
-                    // Jika formulir diisi dengan benar, kirimkan formulir
-                    // Anda bisa uncomment baris ini jika ingin mengirimkan formulir secara otomatis
-                    this.submit();
-
-                    // Tampilkan pesan sukses jika login berhasil
-                    Swal.fire({
-                        title: "Berhasil",
-                        text: "Anda akan masuk ke aplikasi",
-                        icon: "success"
-                    });
-                }
+        function reset() {
+            Swal.fire({
+                title: "Berhasil",
+                text: "Anda berhasil mereset password, silahkan login kembali",
+                icon: "success"
             });
-        });
+        }
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     document.getElementById("kt_sign_in_form").addEventListener("submit", function(event) {
+        //         event.preventDefault(); // Mencegah pengiriman formulir
+
+        //         var email = document.getElementsByName("email")[0].value;
+        //         var password = document.getElementsByName("password")[0].value;
+        //         var captcha = grecaptcha.getResponse();
+
+        //         if (email.trim() === '' || password.trim() === '') {
+        //             // Tampilkan pesan error jika email atau password kosong
+        //             Swal.fire({
+        //                 title: "Peringatan",
+        //                 text: "Email dan password harap diisi",
+        //                 icon: "error"
+        //             });
+        //         } else if (captcha.length === 0) {
+        //             // Tampilkan pesan error jika captcha tidak dicentang
+        //             Swal.fire({
+        //                 title: "Info",
+        //                 text: "Captcha harus dicentang",
+        //                 icon: "info"
+        //             });
+        //         } else {
+        //             // Jika formulir diisi dengan benar, kirimkan formulir
+        //             // Anda bisa uncomment baris ini jika ingin mengirimkan formulir secara otomatis
+        //             this.submit();
+
+        //             // Tampilkan pesan sukses jika login berhasil
+        //             Swal.fire({
+        //                 title: "Berhasil",
+        //                 text: "Anda akan masuk ke aplikasi",
+        //                 icon: "success"
+        //             });
+        //         }
+        //     });
+        // });
     </script>
 
 </body>

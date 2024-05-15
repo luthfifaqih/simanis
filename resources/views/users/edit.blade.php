@@ -49,7 +49,7 @@
                                 <label class="required form-label fs-6 mb-2">Konfirmasi Password</label>
 
                                 <input class="form-control form-control-lg form-control-solid" type="password"
-                                    placeholder="Masukan Password" name="password_confirm" autocomplete="off" />
+                                    placeholder="Masukan Password" name="password_confirmation" autocomplete="off" />
                             </div>
                             <!--end::Input group--->
 

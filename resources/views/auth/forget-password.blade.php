@@ -118,17 +118,35 @@ License: For each use you must have a valid license purchased only from above li
                         <!--begin::Wrapper-->
                         <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
                             <!--begin::Form-->
-                            <form action="{{ route('actionlogin') }}" method="POST" class="form w-100"
+                            <form action="{{ route('password.email') }}" method="POST" class="form w-100"
                                 novalidate="novalidate" id="kt_sign_in_form">
                                 @csrf
+
+                                <div class="form-group row mb-5">
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+                                    @if (session()->has('status'))
+                                        <div class="alert alert-success">
+                                            {{ session()->get('status') }}
+                                        </div>
+                                    @endif
+                                </div>
+
                                 <!--begin::Heading-->
                                 <div class="text-center mb-11">
                                     <!--begin::Title-->
-                                    <h1 class="text-dark fw-bolder mb-3">Masuk ke Aplikasi</h1>
+                                    <h1 class="text-dark fw-bolder mb-3">Lupa Password</h1>
                                     <!--end::Title-->
                                     <!--begin::Subtitle-->
-                                    <div class="text-gray-500 fw-semibold fs-6">Silahkan isi formulir berikut untuk
-                                        masuk ke aplikasi</div>
+                                    <div class="text-gray-500 fw-semibold fs-6">Silahkan masukan email untuk
+                                        reset password</div>
                                     <!--end::Subtitle=-->
                                 </div>
                                 <!--begin::Heading-->
@@ -138,50 +156,17 @@ License: For each use you must have a valid license purchased only from above li
                                 </div>
                                 <!--end::Separator-->
                                 <!--begin::Input group=-->
-                                <div class="fv-row mb-3">
+                                <div class="fv-row mb-8">
                                     <!--begin::Email-->
-                                    <input type="text" placeholder="Masukan email" name="email" autocomplete="off"
-                                        class="form-control bg-transparent" value="{{ old('email') }}" />
+                                    <input type="text" placeholder="Email" name="email" autocomplete="off"
+                                        class="form-control bg-transparent" />
                                     <!--end::Email-->
                                 </div>
-                                <!--end::Input group=-->
-                                <!--begin::Wrapper-->
-                                <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-3">
-                                    <div></div>
-                                    <!--begin::Link-->
-                                    <a href="{{ route('password.request') }}" class="link-primary">Lupa kata sandi
-                                        ?</a>
-                                    <!--end::Link-->
-                                </div>
-                                <!--end::Wrapper-->
-                                <!--begin::Input group=-->
-                                <div class="fv-row mb-3">
-                                    <!--begin::Password-->
-                                    <input type="password" placeholder="Masukan kata sandi" name="password"
-                                        autocomplete="off" class="form-control bg-transparent"
-                                        value="{{ old('password') }}" />
-                                    <!--end::Password-->
-                                </div>
-                                <!--end::Input group=-->
-                                {{-- Captcha --}}
-                                <div class="fv-row mb-10 text-center">
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-6" style="display:flex;min-height:50px;">
-                                        {!! NoCaptcha::display() !!}
-                                        {!! NoCaptcha::renderJs() !!}
-                                        @error('g-recaptcha-response')
-                                            <span class="text-danger" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                {{-- Captcha --}}
-                                <!--begin::Submit button-->
-                                <div class="d-grid mb-10">
-                                    <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
+                                <!--begin::Actions-->
+                                <div class="d-flex flex-wrap justify-content-center pb-lg-0">
+                                    <button type="submit" id="kt_password_reset_submit" class="btn btn-primary me-4">
                                         <!--begin::Indicator label-->
-                                        <span class="indicator-label">Masuk</span>
+                                        <span class="indicator-label">Send password reset link</span>
                                         <!--end::Indicator label-->
                                         <!--begin::Indicator progress-->
                                         <span class="indicator-progress">Please wait...
@@ -189,13 +174,9 @@ License: For each use you must have a valid license purchased only from above li
                                                 class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                         <!--end::Indicator progress-->
                                     </button>
+                                    <a href="{{ route('login') }}" class="btn btn-light">Cancel</a>
                                 </div>
-                                <!--end::Submit button-->
-                                <!--begin::Sign up-->
-                                <div class="text-gray-500 text-center fw-semibold fs-6">Belum punya akun?
-                                    <a href="{{ route('register') }}" class="link-primary">Buat akun</a>
-                                </div>
-                                <!--end::Sign up-->
+                                <!--end::Actions-->
                             </form>
                             <!--end::Form-->
                         </div>
@@ -229,7 +210,7 @@ License: For each use you must have a valid license purchased only from above li
     <!--end::Javascript-->
 
     <!--begin::Javascript-->
-    <script>
+    {{-- <script>
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("kt_sign_in_form").addEventListener("submit", function(event) {
                 event.preventDefault(); // Mencegah pengiriman formulir
@@ -266,7 +247,7 @@ License: For each use you must have a valid license purchased only from above li
                 }
             });
         });
-    </script>
+    </script> --}}
 
 </body>
 <!--end::Body-->

@@ -78,14 +78,22 @@ class UserController extends Controller
     {
         $validate = $request->validate([
             'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-            'password_confirm' => 'required|same:password',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|confirmed|min:6',  // Gunakan 'nullable' agar tidak wajib diisi, dan 'confirmed' untuk memeriksa kesamaan dengan password_confirmation
         ]);
 
-        $user->update($request->all());
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
         return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
+
 
     public function destroy($id)
     {
