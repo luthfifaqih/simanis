@@ -176,8 +176,7 @@ License: For each use you must have a valid license purchased only from above li
                                 <!--end::Input group=-->
                                 <!--begin::Submit button-->
                                 <div class="d-grid mb-10">
-                                    <button type="submit" id="kt_sign_in_submit" class="btn btn-primary"
-                                        onclick="reset()">
+                                    <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
                                         <!--begin::Indicator label-->
                                         <span class="indicator-label">Reset Password</span>
                                         <!--end::Indicator label-->
@@ -223,49 +222,34 @@ License: For each use you must have a valid license purchased only from above li
 
     <!--begin::Javascript-->
     <script>
-        function reset() {
-            Swal.fire({
-                title: "Berhasil",
-                text: "Anda berhasil mereset password, silahkan login kembali",
-                icon: "success"
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("kt_sign_in_form").addEventListener("submit", function(event) {
+                event.preventDefault(); // Mencegah pengiriman formulir
+
+                var password = document.getElementsByName("password")[0].value;
+                var password_confirmation = document.getElementsByName("password_confirmation")[0].value;
+
+                if (password.trim() === '' || password_confirmation.trim() === '') {
+                    // Tampilkan pesan error jika email atau password kosong
+                    Swal.fire({
+                        title: "Peringatan",
+                        text: "Kata sandi dan ulang kata sandi harap diisi",
+                        icon: "error"
+                    });
+                } else {
+                    // Jika formulir diisi dengan benar, kirimkan formulir
+                    // Anda bisa uncomment baris ini jika ingin mengirimkan formulir secara otomatis
+                    this.submit();
+
+                    // Tampilkan pesan sukses jika login berhasil
+                    Swal.fire({
+                        title: "Berhasil",
+                        text: "Anda berhasil me-reset kata sandi",
+                        icon: "success"
+                    });
+                }
             });
-        }
-        // document.addEventListener("DOMContentLoaded", function() {
-        //     document.getElementById("kt_sign_in_form").addEventListener("submit", function(event) {
-        //         event.preventDefault(); // Mencegah pengiriman formulir
-
-        //         var email = document.getElementsByName("email")[0].value;
-        //         var password = document.getElementsByName("password")[0].value;
-        //         var captcha = grecaptcha.getResponse();
-
-        //         if (email.trim() === '' || password.trim() === '') {
-        //             // Tampilkan pesan error jika email atau password kosong
-        //             Swal.fire({
-        //                 title: "Peringatan",
-        //                 text: "Email dan password harap diisi",
-        //                 icon: "error"
-        //             });
-        //         } else if (captcha.length === 0) {
-        //             // Tampilkan pesan error jika captcha tidak dicentang
-        //             Swal.fire({
-        //                 title: "Info",
-        //                 text: "Captcha harus dicentang",
-        //                 icon: "info"
-        //             });
-        //         } else {
-        //             // Jika formulir diisi dengan benar, kirimkan formulir
-        //             // Anda bisa uncomment baris ini jika ingin mengirimkan formulir secara otomatis
-        //             this.submit();
-
-        //             // Tampilkan pesan sukses jika login berhasil
-        //             Swal.fire({
-        //                 title: "Berhasil",
-        //                 text: "Anda akan masuk ke aplikasi",
-        //                 icon: "success"
-        //             });
-        //         }
-        //     });
-        // });
+        });
     </script>
 
 </body>
