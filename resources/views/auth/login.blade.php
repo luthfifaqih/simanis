@@ -234,9 +234,9 @@ License: For each use you must have a valid license purchased only from above li
             document.getElementById("kt_sign_in_form").addEventListener("submit", function(event) {
                 event.preventDefault(); // Mencegah pengiriman formulir
 
-                var email = document.getElementsByName("email")[0].value;
-                var password = document.getElementsByName("password")[0].value;
-                var captcha = grecaptcha.getResponse();
+                let email = document.getElementsByName("email")[0].value;
+                let password = document.getElementsByName("password")[0].value;
+                let captcha = grecaptcha.getResponse();
 
                 if (email.trim() === '' || password.trim() === '') {
                     // Tampilkan pesan error jika email atau password kosong
@@ -267,6 +267,7 @@ License: For each use you must have a valid license purchased only from above li
             });
         });
     </script>
+
 
 </body>
 <!--end::Body-->
