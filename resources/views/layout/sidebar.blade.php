@@ -140,7 +140,7 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="#">
+                        <a class="menu-link" href="{{ route('uploadpersyaratan.create') }}">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-document fs-2">
                                     <span class="path1"></span>
@@ -250,6 +250,22 @@
                         <!--end:Menu content-->
                     </div>
                     <!--end:Menu item-->
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('users.index') }}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-profile-circle fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Data User</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    <!--end:Menu item-->
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <!--begin:Menu link-->
                         <span class="menu-link">
@@ -322,6 +338,33 @@
                     <div class="menu-item pt-5">
                         <!--begin:Menu content-->
                         <div class="menu-content">
+                            <span class="menu-heading fw-bold text-uppercase fs-7">Menu Home</span>
+                        </div>
+                        <!--end:Menu content-->
+                    </div>
+                    <!--end:Menu item-->
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('dashboard') }}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-element-11 fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                    <span class="path4"></span>
+                                    <span class="path5"></span>
+                                    <span class="path6"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Dashboard</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    <!--end:Menu item-->
+                    <div class="menu-item pt-5">
+                        <!--begin:Menu content-->
+                        <div class="menu-content">
                             <span class="menu-heading fw-bold text-uppercase fs-7">Menu Pengajuan</span>
                         </div>
                         <!--end:Menu content-->
@@ -330,7 +373,7 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="#">
+                        <a class="menu-link" href="{{ route('uploadpersyaratan.create') }}">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-document fs-2">
                                     <span class="path1"></span>
@@ -339,6 +382,22 @@
                                 </i>
                             </span>
                             <span class="menu-title">Upload Persyaratan</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    <!--end:Menu item-->
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('uploadpersyaratan.index') }}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-document fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Riwayat Upload Persyaratan</span>
                         </a>
                         <!--end:Menu link-->
                     </div>

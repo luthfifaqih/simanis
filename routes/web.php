@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\UploadPersyaratanController;
 use App\Models\UploadPersyaratan;
 
 /*
@@ -89,28 +90,42 @@ Route::post('/reset-password', function (Request $request) {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware('auth');
+    Route::resource('users', UserController::class);
 
     //superadmin
-    Route::group(['middleware' => ['role:superadmin']], function () {
-        Route::resource('users', UserController::class);
-    });
+    // Route::middleware(['role:superadmin'], function () {
+    //     //verifikasi
+    //     // Route::get('verifikasi/review', [UploadPersyaratanController::class, 'review'])->name('adm.verifikasi.review');
+    //     // Route::post('verifikasi/{id}/verify', [UploadPersyaratanController::class, 'verify'])->name('adm.verifikasi.verify');
+    //     // Route::post('verifikasi/{id}/reject', [UploadPersyaratanController::class, 'reject'])->name('adm.verifikasi.reject');
+    //     // //upload
+    //     // Route::get('uploadpersyaratan', [UploadPersyaratanController::class, 'index'])->name('adm.uploadpersyaratan.index');
+    //     // Route::get('uploadpersyaratan/create', [UploadPersyaratanController::class, 'create'])->name('adm.uploadpersyaratan.create');
+    //     // Route::post('uploadpersyaratan', [UploadPersyaratanController::class, 'store'])->name('adm.uploadpersyaratan.store');
+    // });
 
     //kadis
-    Route::group(['middleware' => ['role:kadis']], function () {
+    Route::middleware(['role:kadis'], function () {
         Route::resource('users', UserController::class);
     });
 
     //verifikator
-    Route::group(['middleware' => ['role:verifikator']], function () {
-        Route::get('verifikasi/review', [UploadPersyaratan::class, 'review'])->name('verifikasi.review');
-        Route::post('verifikasi/{id}/verify', [UploadPersyaratan::class, 'verify'])->name('verifikasi.verify');
-        Route::post('verifikasi/{id}/reject', [UploadPersyaratan::class, 'reject'])->name('verifikasi.reject');
+    Route::middleware(['role:verifikator'], function () {
+        Route::get('verifikasi/review', [UploadPersyaratanController::class, 'review'])->name('verifikasi.review');
+        Route::post('verifikasi/{id}/verify', [UploadPersyaratanController::class, 'verify'])->name('verifikasi.verify');
+        Route::post('verifikasi/{id}/reject', [UploadPersyaratanController::class, 'reject'])->name('verifikasi.reject');
     });
 
     //pers
-    Route::group(['middleware' => ['role:pers']], function () {
-        Route::get('uploadpersyaratan', [UploadPersyaratan::class, 'index'])->name('uploadpersyaratan.index');
-        Route::get('uploadpersyaratan/create', [UploadPersyaratan::class, 'create'])->name('uploadpersyaratan.create');
-        Route::post('uploadpersyaratan', [UploadPersyaratan::class, 'store'])->name('uploadpersyaratan.store');
+    Route::middleware(['role:pers'], function () {
     });
+    Route::get('uploadpersyaratan', [UploadPersyaratanController::class, 'index'])->name('uploadpersyaratan.index');
+    Route::post('uploadpersyaratan', [UploadPersyaratanController::class, 'store'])->name('uploadpersyaratan.store');
+    Route::get('uploadpersyaratan/create', [UploadPersyaratanController::class, 'create'])->name('uploadpersyaratan.create');
 });
+
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('uploadpersyaratan', [UploadPersyaratan::class, 'index'])->name('uploadpersyaratan.index');
+//     Route::get('uploadpersyaratan/create', [UploadPersyaratan::class, 'create'])->name('uploadpersyaratan.create');
+//     Route::post('uploadpersyaratan', [UploadPersyaratan::class, 'store'])->name('uploadpersyaratan.store');
+// });

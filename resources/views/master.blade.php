@@ -53,6 +53,8 @@ License: For each use you must have a valid license purchased only from above li
     <link href="{{ asset('frontend/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('frontend/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
+    <script src="{{ asset('frontend/assets/plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/scripts.bundle.js') }}"></script>
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -3003,8 +3005,7 @@ License: For each use you must have a valid license purchased only from above li
         var hostUrl = "assets/";
     </script>
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-    <script src="{{ asset('frontend/assets/plugins/global/plugins.bundle.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/scripts.bundle.js') }}"></script>
+
     <!--end::Global Javascript Bundle-->
     <!--begin::Vendors Javascript(used for this page only)-->
     <script src="{{ asset('frontend/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
