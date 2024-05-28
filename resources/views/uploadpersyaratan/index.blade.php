@@ -55,8 +55,8 @@
                 type: 'GET',
             },
             columns: [{
-                    data: 'nama_media',
-                    name: 'nama_media'
+                    data: 'nama_perusahaan',
+                    name: 'nama_perusahaan'
                 },
                 {
                     data: 'status',

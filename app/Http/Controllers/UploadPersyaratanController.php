@@ -180,7 +180,7 @@ class UploadPersyaratanController extends Controller
         $title['title'] = 'Upload Persyaratan';
         // $upload = UploadPersyaratan::where('users_id', Auth::id())->get();
         if ($request->ajax()) {
-            $data = UploadPersyaratan::select('id', 'nama_media', 'status, created_at');
+            $data = UploadPersyaratan::select('id', 'users_id', 'nama_perusahaan', 'status', 'created_at')->where('users_id', Auth::id())->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
