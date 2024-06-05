@@ -19,6 +19,12 @@ License: For each use you must have a valid license purchased only from above li
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', $title) | SIMANIS</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.3.136/pdf.min.mjs"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.3.136/pdf.mjs"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.3.136/pdf.worker.mjs"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.3.136/pdf.worker.min.mjs"></script>
+    <script src="{{ asset('frontend/assets/plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/scripts.bundle.js') }}"></script>
     <script src="{{ asset('frontend/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <link href="{{ asset('frontend/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
         type="text/css" />
@@ -49,6 +55,7 @@ License: For each use you must have a valid license purchased only from above li
     <link href="{{ asset('frontend/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
         type="text/css" />
     <!--end::Vendor Stylesheets-->
+
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
     <link href="{{ asset('frontend/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('frontend/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
@@ -3006,8 +3013,7 @@ License: For each use you must have a valid license purchased only from above li
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
 
     <!--end::Global Javascript Bundle-->
-    <script src="{{ asset('frontend/assets/plugins/global/plugins.bundle.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/scripts.bundle.js') }}"></script>
+
     <!--begin::Vendors Javascript(used for this page only)-->
     <script src="{{ asset('frontend/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>

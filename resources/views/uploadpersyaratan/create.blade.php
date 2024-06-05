@@ -88,9 +88,6 @@
                                         </div>
                                         <!--end::Wrapper-->
 
-                                        <!--begin::Line-->
-                                        <div class="stepper-line h-40px"></div>
-                                        <!--end::Line-->
                                     </div>
                                     <!--end::Step 3-->
                                 </div>
@@ -537,6 +534,8 @@
                             stepper.on("kt.stepper.previous", function(stepper) {
                                 stepper.goPrevious(); // go previous step
                             });
+
+                            //ajax fungsi simpan
                             $('#btn-simpan').on('click', function(e) {
                                 e.preventDefault();
                                 $.ajax({
@@ -549,14 +548,16 @@
                                     success: function(response) {
                                         Swal.fire({
                                             title: "Berhasil",
-                                            text: "Berhasil menambah data",
+                                            text: "Berhasil mengajukan persyaratan",
                                             icon: "success"
+                                        }).then(function() {
+                                            window.location.href = "{{ route('uploadpersyaratan.index') }}";
                                         });
                                     },
                                     error: function(xhr, status, error) {
                                         Swal.fire({
                                             title: "Gagal",
-                                            text: "Gagal menambah data",
+                                            text: "Gagal menambah data, form harap diisi",
                                             icon: "error"
                                         });
                                     }

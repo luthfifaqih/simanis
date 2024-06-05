@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\PdfViewersController;
 use App\Http\Controllers\UploadPersyaratanController;
 use App\Models\UploadPersyaratan;
 
@@ -111,10 +112,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     //verifikator
     Route::middleware(['role:verifikator'], function () {
-        Route::get('verifikasi/review', [UploadPersyaratanController::class, 'review'])->name('verifikasi.review');
-        Route::post('verifikasi/{id}/verify', [UploadPersyaratanController::class, 'verify'])->name('verifikasi.verify');
-        Route::post('verifikasi/{id}/reject', [UploadPersyaratanController::class, 'reject'])->name('verifikasi.reject');
     });
+    Route::get('verifikasi/review', [UploadPersyaratanController::class, 'review'])->name('verifikasi.review');
+    Route::get('verifikasi/{id}/detail', [UploadPersyaratanController::class, 'detail'])->name('verifikasi.detail');
+    Route::post('verifikasi/{id}/verify', [UploadPersyaratanController::class, 'verify'])->name('verifikasi.verify');
+    Route::post('verifikasi/{id}/reject', [UploadPersyaratanController::class, 'reject'])->name('verifikasi.reject');
+    Route::get('pdfviewer/{id}', [UploadPersyaratanController::class, 'showPdfViewer'])->name('pdf.viewer');
 
     //pers
     Route::middleware(['role:pers'], function () {

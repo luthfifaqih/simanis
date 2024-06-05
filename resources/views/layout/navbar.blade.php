@@ -3,7 +3,7 @@
     <!--begin::Brand-->
     <div class="header-brand">
         <!--begin::Logo-->
-        <a href="../../demo8/dist/index.html">
+        <a href="{{ route('dashboard') }}">
             <img alt="Logo" src="{{ asset('frontend/assets/media/logos/default-dark.svg') }}"
                 class="h-25px h-lg-25px" />
         </a>

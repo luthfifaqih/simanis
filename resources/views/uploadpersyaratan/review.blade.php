@@ -23,7 +23,6 @@
                                     <tr class="fw-semibold fs-6 text-gray-800">
                                         <th class="min-w-200px">Nama Perusahaan</th>
                                         <th class="min-w-150px">Status</th>
-                                        <th class="min-w-150px">Tanggal Unggah</th>
                                         <th class="min-w-200px">Action</th>
                                     </tr>
                                 </thead>
@@ -51,8 +50,8 @@
             serverSide: true,
             ajax: {
                 url: "{{ route('verifikasi.review') }}",
-                type: 'GET'
-            }
+                type: 'GET',
+            },
             columns: [{
                     data: 'nama_perusahaan',
                     name: 'nama_perusahaan'
@@ -62,16 +61,18 @@
                     name: 'status'
                 },
                 {
-                    data: 'created_at',
-                    name: 'created_at'
-                },
-                {
                     data: 'action',
                     name: 'action',
                     orderable: false,
                     searchable: false
-                }
+                },
             ]
+        });
+
+        // fungsi search untuk input pencarian
+        let table = new DataTable('#kt_datatable_horizontal_scroll');
+        $('#searchInput').on('keyup', function() {
+            table.search(this.value).draw();
         });
     </script>
 @endsection

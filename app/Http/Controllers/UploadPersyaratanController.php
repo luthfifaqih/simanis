@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\UploadPersyaratan;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -66,6 +67,7 @@ class UploadPersyaratanController extends Controller
         $upload->jenis_media = $request->jenis_media;
         $upload->url_media = $request->url_media;
         $upload->klasifikasi_media = $request->klasifikasi_media;
+        $upload->status = 'Menunggu verifikasi';
         $upload->save();
 
 
@@ -175,31 +177,26 @@ class UploadPersyaratanController extends Controller
         ]);
     }
 
+    //Tampilan riwayat upload user
     public function index(Request $request)
     {
-        $title['title'] = 'Upload Persyaratan';
-        // $upload = UploadPersyaratan::where('users_id', Auth::id())->get();
+        $title['title'] = 'Riwayat Upload Persyaratan';
         if ($request->ajax()) {
             $data = UploadPersyaratan::select('id', 'users_id', 'nama_perusahaan', 'status', 'created_at')->where('users_id', Auth::id())->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
                     $button = '<div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle" type="button" id="actionDropdown' . $data->id . '" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Pilih Aksi
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="actionDropdown' . $data->id . '">
-                                        <li><a class="dropdown-item" href="' . route('users.edit', $data->id) . '"><i class="ki-duotone ki-pencil fs-5">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i> Edit</a></li>
-                                        <li><button type="button" class="delete-btn dropdown-item" data-id="' . $data->id . '"><i class="ki-duotone ki-tag-cross fs-5">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                            <span class="path3"></span>
-                                        </i> Delete</button></li>
-                                    </ul>
-                                </div>';
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="actionDropdown' . $data->id . '" data-bs-toggle="dropdown" aria-expanded="false">
+                        Pilih Aksi
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="actionDropdown' . $data->id . '">
+                        <li><a class="dropdown-item" href="' . route('users.edit', $data->id) . '"><i class="ki-duotone ki-pencil fs-5">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i> Edit</a></li>
+                    </ul>
+                </div>';
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -208,12 +205,13 @@ class UploadPersyaratanController extends Controller
         return view('uploadpersyaratan.index', $title);
     }
 
+    //Tampilan table review verfikator
     public function review(Request $request)
     {
         $title['title'] = 'Review Persyaratan';
         $upload = UploadPersyaratan::where('status', 'menunggu verifikasi')->get();
         if ($request->ajax()) {
-            $data = UploadPersyaratan::select('id', 'users_id', 'nama_perusahaan', 'status', 'created_at')->where('status', 'menunggu verifikasi')->get();
+            $data = UploadPersyaratan::select('id', 'users_id', 'nama_perusahaan', 'status')->where('status', 'menunggu verifikasi')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
@@ -222,15 +220,11 @@ class UploadPersyaratanController extends Controller
                                         Pilih Aksi
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="actionDropdown' . $data->id . '">
-                                        <li><a class="dropdown-item" href="#"><i class="ki-duotone ki-pencil fs-5">
+                                        <li><a class="dropdown-item" href="' . route('verifikasi.detail', $data->id) . '"><i class="ki-duotone ki-eye fs-5">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
-                                        </i> Edit</a></li>
-                                        // <li><button type="button" class="delete-btn dropdown-item" data-id="' . $data->id . '"><i class="ki-duotone ki-tag-cross fs-5">
-                                        //     <span class="path1"></span>
-                                        //     <span class="path2"></span>
-                                        //     <span class="path3"></span>
-                                        // </i> Delete</button></li>
+                                            <span class="path3"></span>
+                                        </i> Detail</a></li>
                                     </ul>
                                 </div>';
                     return $button;
@@ -241,13 +235,25 @@ class UploadPersyaratanController extends Controller
         return view('uploadpersyaratan.review', $title, compact('upload'));
     }
 
+    //menampilkan dalaman halaman ketika klik aksi detail
+    public function detail($id)
+    {
+        $title['title'] = 'Detail Upload Persyaratan';
+        $upload = UploadPersyaratan::findOrFail($id);
+        return view('uploadpersyaratan.detail', $title, compact('upload'));
+    }
+
     public function verify($id)
     {
         $upload = UploadPersyaratan::find($id);
         $upload->status = 'terverifikasi';
         $upload->save();
 
-        return redirect()->route('uploadpersyaratan.review')->with('success', 'Persyaratan berhasil diverifikasi');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Persyaratan berhasil diverifikasi',
+            'url' => route('uploadpersyaratan.review')
+        ]);
     }
 
     public function reject($id)
@@ -256,6 +262,19 @@ class UploadPersyaratanController extends Controller
         $upload->status = 'ditolak';
         $upload->save();
 
-        return redirect()->route('uploadpersyaratan.review')->with('success', 'Persyaratan ditolak');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Persyaratan ditolak',
+            'url' => route('uploadpersyaratan.review')
+        ]);
+    }
+
+    public function showPdfViewer($pathToFile)
+    {
+        $pathToFile = 'public/' . $pathToFile;
+        $pathToFile = public_path($pathToFile);
+        $pdfContent = file_get_contents($pathToFile);
+        $response = response($pdfContent)->header('Content-Type', 'application/pdf');
+        return $response;
     }
 }
