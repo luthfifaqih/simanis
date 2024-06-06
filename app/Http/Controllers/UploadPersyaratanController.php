@@ -6,6 +6,7 @@ use App\Models\UploadPersyaratan;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
 class UploadPersyaratanController extends Controller
@@ -269,12 +270,17 @@ class UploadPersyaratanController extends Controller
         ]);
     }
 
-    public function showPdfViewer($pathToFile)
+    public function showPdfViewer($id)
     {
-        $pathToFile = 'public/' . $pathToFile;
-        $pathToFile = public_path($pathToFile);
-        $pdfContent = file_get_contents($pathToFile);
-        $response = response($pdfContent)->header('Content-Type', 'application/pdf');
-        return $response;
+        // $pdf = UploadPersyaratan::find($id);
+        // if (!$pdf) {
+        //     abort(404, 'PDF Tidak Ditemukan');
+        // }
+        // // Menampilkan PDF di PDF viewer
+        // return response()->file($pdf->path);
+        $upload = UploadPersyaratan::findOrFail($id);
+        if (request('type') === 'akta_pendirian') {
+            return response()->file(Storage::path($upload->akta_pendirian));
+        }
     }
 }

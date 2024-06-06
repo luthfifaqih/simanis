@@ -26,63 +26,14 @@
                                 <!--begin::Label-->
                                 <label class="required fw-semibold fs-6 mb-2">Akta Pendirian</label>
                                 <!--end::Label-->
-                                <a href="{{ route('pdf.viewer', $upload->akta_pendirian) }}" target="_blank">
+                                <a href="{{ route('pdf.viewer', ['id' => $upload->id, 'type' => 'akta_pendirian']) }}"
+                                    target="_blank">
                                     <button type="button" class="btn btn-primary">Lihat berkas</button>
                                 </a>
                             </div>
                             <!--end::Input group-->
-
-                            <!--begin::Input group-->
-                            <div class="fv-row mb-10">
-                                <!--begin::Label-->
-                                <label class="required fw-semibold fs-6 mb-2">Email</label>
-                                <!--end::Label-->
-                                <!--begin::Input-->
-                                <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0"
-                                    placeholder="Masukan Email" />
-                                <!--end::Input-->
-                            </div>
-                            <!--end::Input group-->
-
-                            <!--begin::Input group--->
-                            <div class="fv-row mb-10">
-                                <!--begin::Label-->
-                                <label class="required form-label fs-6 mb-2">Pilih Role</label>
-                                <!--end::Label-->
-
-                                <!--begin::Select2-->
-                                <select class="form-select" name="role" data-control="select2"
-                                    data-placeholder="Select an option">
-                                    <option></option>
-                                    <option value="superadmin">Super Admin</option>
-                                    <option value="kadis">Kadis</option>
-                                    <option value="verifikator">Verifikator</option>
-                                    <option value="pers">Pers</option>
-                                </select>
-                                <!--begin::Select2-->
-                            </div>
-                            <!--end::Input group--->
-
-                            <!--begin::Input group--->
-                            <div class="fv-row mb-10">
-                                <label class="required form-label fs-6 mb-2">Password</label>
-
-                                <input class="form-control form-control-lg form-control-solid" type="password"
-                                    placeholder="Masukan Password" name="password" autocomplete="off" />
-                            </div>
-                            <!--end::Input group--->
-
-                            <!--begin::Input group--->
-                            <div class="fv-row mb-10">
-                                <label class="required form-label fs-6 mb-2">Konfirmasi Password</label>
-
-                                <input class="form-control form-control-lg form-control-solid" type="password"
-                                    placeholder="Masukan Password" name="password_confirm" autocomplete="off" />
-                            </div>
-                            <!--end::Input group--->
-
                             <!--begin::Actions-->
-                            <button id="kt_docs_formvalidation_text_submit" type="submit" class="btn btn-primary"
+                            {{-- <button id="kt_docs_formvalidation_text_submit" type="submit" class="btn btn-primary"
                                 onclick="simpan()">
                                 <span class="indicator-label">
                                     Simpan
@@ -101,7 +52,7 @@
                                 <span class="indicator-progress">
                                     Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                                 </span>
-                            </a>
+                            </a> --}}
                             <!--end::Actions-->
                         </form>
                         <!--end::Form-->

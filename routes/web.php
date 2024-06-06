@@ -117,7 +117,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('verifikasi/{id}/detail', [UploadPersyaratanController::class, 'detail'])->name('verifikasi.detail');
     Route::post('verifikasi/{id}/verify', [UploadPersyaratanController::class, 'verify'])->name('verifikasi.verify');
     Route::post('verifikasi/{id}/reject', [UploadPersyaratanController::class, 'reject'])->name('verifikasi.reject');
-    Route::get('pdfviewer/{id}', [UploadPersyaratanController::class, 'showPdfViewer'])->name('pdf.viewer');
+    Route::get('pdfviewer/{id}/pdf', [UploadPersyaratanController::class, 'showPdfViewer'])->name('pdf.viewer');
 
     //pers
     Route::middleware(['role:pers'], function () {
