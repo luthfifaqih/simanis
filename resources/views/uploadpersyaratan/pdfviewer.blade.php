@@ -1,25 +1,4 @@
 <!DOCTYPE html>
-<!--
-Copyright 2012 Mozilla Foundation
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-Adobe CMap resources are covered by their own copyright but the same license:
-
-    Copyright 1990-2015 Adobe Systems Incorporated.
-
-See https://github.com/adobe-type-tools/cmap-resources
--->
 <html dir="ltr" mozdisallowselectionprint>
 
 <head>
@@ -28,11 +7,11 @@ See https://github.com/adobe-type-tools/cmap-resources
     <meta name="google" content="notranslate">
     <title>PDF.js viewer</title>
 
-    <!-- This snippet is used in production (included from viewer.html) -->
-    <link rel="resource" type="application/l10n" href="locale/locale.json">
+    <!-- This snippet is used in production -->
+    <link rel="resource" type="application/l10n" href="{{ asset('pdfjs-4.3.136-dist/web/locale/locale.json') }}">
     <script src="{{ asset('pdfjs-4.3.136-dist/build/pdf.mjs') }}" type="module"></script>
 
-    <link rel="stylesheet" href="viewer.css">
+    <link rel="stylesheet" href="{{ asset('pdfjs-4.3.136-dist/web/viewer.css') }}">
 
     <script src="{{ asset('pdfjs-4.3.136-dist/web/viewer.mjs') }}" type="module"></script>
 </head>

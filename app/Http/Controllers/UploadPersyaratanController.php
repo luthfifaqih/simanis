@@ -272,15 +272,12 @@ class UploadPersyaratanController extends Controller
 
     public function showPdfViewer($id)
     {
-        // $pdf = UploadPersyaratan::find($id);
-        // if (!$pdf) {
-        //     abort(404, 'PDF Tidak Ditemukan');
-        // }
-        // // Menampilkan PDF di PDF viewer
-        // return response()->file($pdf->path);
-        $upload = UploadPersyaratan::findOrFail($id);
-        if (request('type') === 'akta_pendirian') {
-            return response()->file(Storage::path($upload->akta_pendirian));
+        $pdf = UploadPersyaratan::findOrFail($id);
+        if (!$pdf) {
+            abort(404, 'PDF Tidak Ditemukan');
         }
+        // Menampilkan PDF di PDF viewer
+        $upload = Storage::url($pdf->path);
+        return view('uploadpersyaratan.pdfviewer', compact('upload'));
     }
 }
