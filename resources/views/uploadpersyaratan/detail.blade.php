@@ -26,9 +26,40 @@
                                 <!--begin::Label-->
                                 <label class="required fw-semibold fs-6 mb-2">Akta Pendirian</label>
                                 <!--end::Label-->
-                                <a href="{{ route('pdf.viewer', ['id' => $upload->id, 'type' => 'akta_pendirian']) }}"
-                                    target="_blank">
-                                    <button type="button" class="btn btn-primary">Lihat berkas</button>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#kt_modal_1">
+                                    Lihat berkas
+                                </button>
+                                {{-- modal --}}
+                                <div class="modal fade" tabindex="-1" id="kt_modal_1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title">Akta Pendirian</h3>
+
+                                                <!--begin::Close-->
+                                                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
+                                                    data-bs-dismiss="modal" aria-label="Close">
+                                                    <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span
+                                                            class="path2"></span></i>
+                                                </div>
+                                                <!--end::Close-->
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <iframe
+                                                    src="{{ route('pdf.viewer', ['id' => $upload->id, 'type' => 'akta_pendirian']) }}"
+                                                    width="100%" height="600"></iframe>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-warning"
+                                                    data-bs-dismiss="modal">Kembali</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- modal --}}
                                 </a>
                             </div>
                             <!--end::Input group-->
@@ -54,6 +85,10 @@
                                 </span>
                             </a> --}}
                             <!--end::Actions-->
+
+                            {{-- Modal PDF --}}
+
+                            {{-- Modal PDF --}}
                         </form>
                         <!--end::Form-->
                         <script>

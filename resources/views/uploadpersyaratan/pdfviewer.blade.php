@@ -1,19 +1,24 @@
 <!DOCTYPE html>
+
 <html dir="ltr" mozdisallowselectionprint>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="google" content="notranslate">
-    <title>PDF.js viewer</title>
+    <title>PDF viewer</title>
 
-    <!-- This snippet is used in production -->
-    <link rel="resource" type="application/l10n" href="{{ asset('pdfjs-4.3.136-dist/web/locale/locale.json') }}">
-    <script src="{{ asset('pdfjs-4.3.136-dist/build/pdf.mjs') }}" type="module"></script>
+    <link rel="stylesheet" href="{{ asset('frontend/pdfjs/web/viewer.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('pdfjs-4.3.136-dist/web/viewer.css') }}">
+    <link rel="resource" type="application/l10n" href="{{ asset('frontend/pdfjs/web/locale/locale.json') }}">
+    <script src="{{ asset('frontend/pdfjs/build/pdf.mjs') }}"></script>
 
-    <script src="{{ asset('pdfjs-4.3.136-dist/web/viewer.mjs') }}" type="module"></script>
+    <script>
+        const FILE_PDF = "{{ request()->input('file') }}";
+        const URL_ASSET = "{{ asset('frontend/pdfjs') }}";
+    </script>
+    <script src="{{ asset('frontend/pdfjs/web/viewer.mjs') }}"></script>
+
 </head>
 
 <body tabindex="1">
@@ -409,7 +414,8 @@
                                 <select id="scaleSelect" title="Zoom" tabindex="23"
                                     data-l10n-id="pdfjs-zoom-select">
                                     <option id="pageAutoOption" title="" value="auto" selected="selected"
-                                        data-l10n-id="pdfjs-page-scale-auto">Automatic Zoom</option>
+                                        data-l10n-id="pdfjs-page-scale-auto">Automatic Zoom
+                                    </option>
                                     <option id="pageActualOption" title="" value="page-actual"
                                         data-l10n-id="pdfjs-page-scale-actual">Actual Size</option>
                                     <option id="pageFitOption" title="" value="page-fit"
@@ -456,8 +462,8 @@
         <div id="dialogContainer">
             <dialog id="passwordDialog">
                 <div class="row">
-                    <label for="password" id="passwordText" data-l10n-id="pdfjs-password-label">Enter the password to
-                        open this PDF file:</label>
+                    <label for="password" id="passwordText" data-l10n-id="pdfjs-password-label">Enter the password
+                        to open this PDF file:</label>
                 </div>
                 <div class="row">
                     <input type="password" id="password" class="toolbarField">
@@ -612,5 +618,31 @@
     </div> <!-- outerContainer -->
     <div id="printContainer"></div>
 </body>
+<script>
+    var scale = 1.5;
+    var viewport = page.getViewport({
+        scale: scale,
+    });
+    // Support HiDPI-screens.
+    var outputScale = window.devicePixelRatio || 1;
+
+    var canvas = document.getElementById('viewer');
+    var context = canvas.getContext('2d');
+
+    canvas.width = Math.floor(viewport.width * outputScale);
+    canvas.height = Math.floor(viewport.height * outputScale);
+    canvas.style.width = Math.floor(viewport.width) + "px";
+    canvas.style.height = Math.floor(viewport.height) + "px";
+
+    var transform = outputScale !== 1 ? [outputScale, 0, 0, outputScale, 0, 0] :
+        null;
+
+    var renderContext = {
+        canvasContext: context,
+        transform: transform,
+        viewport: viewport
+    };
+    page.render(renderContext);
+</script>
 
 </html>

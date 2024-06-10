@@ -28,7 +28,8 @@
                                             </div>
                                         </div>
                                         <div class="mt-2 mb-2">
-                                            <label class="fs-5">Anda terdaftar pada aplikasi sebagai : </label> <br />
+                                            <label class="fs-5">Anda terdaftar pada aplikasi sebagai role : </label>
+                                            <br />
                                             <span
                                                 class="badge badge-light-primary border border-primary me-2 mb-3 fs-5">{{ Auth::user()->role }}</span>
                                         </div>

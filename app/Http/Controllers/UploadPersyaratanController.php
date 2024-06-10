@@ -277,7 +277,28 @@ class UploadPersyaratanController extends Controller
             abort(404, 'PDF Tidak Ditemukan');
         }
         // Menampilkan PDF di PDF viewer
-        $upload = Storage::url($pdf->path);
-        return view('uploadpersyaratan.pdfviewer', compact('upload'));
+        $pdfUrl = route('uploadpersyaratan.fetchPDF', $id);
+
+        return view('uploadpersyaratan.pdfviewer', compact('pdfUrl'))->with([
+            'FILE_PDF' => request()->input('file'),
+            'URL_ASSET' => asset('pdfjs-4.3.136-dist'),
+        ]);
+    }
+
+    public function fetchPDF($id)
+    {
+        $pdf = UploadPersyaratan::findOrFail($id);
+        if (!$pdf || !$pdf->path) {
+            abort(404, 'PDF Tidak Ditemukan');
+        }
+
+        $filePath = Storage::path($pdf->path);
+        $fileName = basename($pdf->path);
+
+        return response()->streamDownload(function () use ($filePath) {
+            echo file_get_contents($filePath);
+        }, $fileName, [
+            'Content-Type' => 'application/pdf',
+        ]);
     }
 }

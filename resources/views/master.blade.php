@@ -19,15 +19,13 @@ License: For each use you must have a valid license purchased only from above li
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', $title) | SIMANIS</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.3.136/pdf.min.mjs"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.3.136/pdf.mjs"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.3.136/pdf.worker.mjs"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.3.136/pdf.worker.min.mjs"></script>
     <script src="{{ asset('frontend/assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/scripts.bundle.js') }}"></script>
     <script src="{{ asset('frontend/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <link href="{{ asset('frontend/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
         type="text/css" />
+    {{-- <script src="{{ asset('frontend/pdfjs/build/pdf.mjs') }}"></script>
+    <script src="{{ asset('frontend/pdfjs/web/viewer.mjs') }}"></script> --}}
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"> --}}
     {{-- <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script> --}}
     {{-- <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script> --}}
