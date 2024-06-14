@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\UploadPersyaratan;
+use App\Models\MasterDokumenSyarat;
+use App\Models\Perusahaan;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
@@ -14,35 +17,34 @@ class UploadPersyaratanController extends Controller
     public function create()
     {
         $title['title'] = 'Upload Persyaratan';
-        return view('uploadpersyaratan.create', $title);
+        $data['perusahaan'] = MasterDokumenSyarat::where('jenis', 'perusahaan')->get();
+        $data['media'] = MasterDokumenSyarat::where('jenis', 'media')->get();
+        $data['jurnalis'] = MasterDokumenSyarat::where('jenis', 'jurnalis')->get();
+        return view('uploadpersyaratan.create', $title)->with($data);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_perusahaan' => 'required',
-            'akta_pendirian' => 'required|file|mimes:pdf|max:2048', //upload file
-            'nib_siup' => 'required|file|mimes:pdf|max:2048', //upload file
-            'npwp_perusahaan' => 'required|file|mimes:pdf|max:2048', //upload file
-            'nomor_pkp' => 'required|file|mimes:pdf|max:2048', //upload file
-            'spt_tahunan' => 'required|file|mimes:pdf|max:2048', //upload file
-            'domisili_perusahaan' => 'required|file|mimes:pdf|max:2048', //upload file
+        //Validasi data
+        $validasi = [
+            'nama_perusahaan' => 'required', //inputan
             'nama_direktur' => 'required', //inputan
-            'ktp_direktur' => 'required|file|mimes:pdf|max:2048', //upload file
-            'surat_penawaran_kerjasama' => 'required|file|mimes:pdf|max:2048', //upload file
-            'surat_kuasa_pimpinan' => 'file|mimes:pdf|max:2048', //upload file
             'nama_media' => 'required', //inputan
-            'domisili_media' => 'required', //inputan
-            'sertifikat_dewan_pers' => 'required|file|mimes:pdf|max:2048', //upload file
-            'organisasi_kewartanan' => 'required|file|mimes:pdf|max:2048', //upload file
-            'surat_pernyataan_aktif' => 'required|file|mimes:pdf|max:2048', //upload file
             'nama_jurnalis' => 'required', //inputan
             'email_jurnalis' => 'required|email', //inputan
             'nomor_kontak_jurnalis' => 'required', //inputan
-            'kartu_pers' => 'required|file|mimes:pdf|max:2048', //upload file
-            'sertifikat_ukw' => 'required|file|mimes:pdf|max:2048', //upload file
-        ]);
 
+        ];
+        //Validasi file
+        $dokumen = MasterDokumenSyarat::all();
+        foreach ($dokumen as $key => $value) {
+            if ($value->required == 1) {
+                $validasi[$value->kode] = 'required|file|mimes:pdf|max:2048';
+            }
+        }
+        $request->validate($validasi);
+
+        //Validasi url
         if ($request->jenis_media == 'online') {
             $request->validate([
                 'url_media' => 'required|url',
@@ -56,121 +58,45 @@ class UploadPersyaratanController extends Controller
             ]);
         }
 
-        $upload = new UploadPersyaratan();
-        $upload->users_id = Auth::id();
-        $upload->nama_perusahaan = $request->nama_perusahaan;
-        $upload->nama_direktur = $request->nama_direktur;
-        $upload->nama_media = $request->nama_media;
-        $upload->domisili_media = $request->domisili_media;
-        $upload->nama_jurnalis = $request->nama_jurnalis;
-        $upload->email_jurnalis = $request->email_jurnalis;
-        $upload->nomor_kontak_jurnalis = $request->nomor_kontak_jurnalis;
-        $upload->jenis_media = $request->jenis_media;
-        $upload->url_media = $request->url_media;
-        $upload->klasifikasi_media = $request->klasifikasi_media;
-        $upload->status = 'Menunggu verifikasi';
+        //upload isian form 
+        $upload = new Perusahaan([
+            'users_id' => Auth::id(),
+            'nama_perusahaan' => $request->nama_perusahaan,
+            'nama_direktur' => $request->nama_direktur,
+            'nama_media' => $request->nama_media,
+            'domisili_media' => $request->domisili_media,
+            'nama_jurnalis' => $request->nama_jurnalis,
+            'email_jurnalis' => $request->email_jurnalis,
+            'nomor_kontak_jurnalis' => $request->nomor_kontak_jurnalis,
+            'jenis_media' => $request->jenis_media,
+            'url_media' => $request->url_media,
+            'klasifikasi_media' => $request->klasifikasi_media,
+            'status' => 'Menunggu verifikasi',
+        ]);
         $upload->save();
+        //mengambil id dari model
+        $id_perusahaan = $upload->id;
 
+        //upload dokumen
+        foreach ($dokumen as $key => $value) {
 
-        if ($request->hasFile('akta_pendirian')) {
-            $file = $request->file('akta_pendirian');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/akta_pendirian', $filename);
-            $upload->akta_pendirian = $filename;
-            $upload->save();
-        }
-        if ($request->hasFile('nib_siup')) {
-            $file = $request->file('nib_siup');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/nib_siup', $filename);
-            $upload->nib_siup = $filename;
-            $upload->save();
-        }
-        if ($request->hasFile('npwp_perusahaan')) {
-            $file = $request->file('npwp_perusahaan');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/npwp_perusahaan', $filename);
-            $upload->npwp_perusahaan = $filename;
-            $upload->save();
-        }
-        if ($request->hasFile('nomor_pkp')) {
-            $file = $request->file('nomor_pkp');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/nomor_pkp', $filename);
-            $upload->nomor_pkp = $filename;
-            $upload->save();
-        }
-        if ($request->hasFile('spt_tahunan')) {
-            $file = $request->file('spt_tahunan');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/spt_tahunan', $filename);
-            $upload->spt_tahunan = $filename;
-            $upload->save();
-        }
-        if ($request->hasFile('domisili_perusahaan')) {
-            $file = $request->file('domisili_perusahaan');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/domisili_perusahaan', $filename);
-            $upload->domisili_perusahaan = $filename;
-            $upload->save();
-        }
-        if ($request->hasFile('ktp_direktur')) {
-            $file = $request->file('ktp_direktur');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/ktp_direktur', $filename);
-            $upload->ktp_direktur = $filename;
-            $upload->save();
-        }
-        if ($request->hasFile('surat_penawaran_kerjasama')) {
-            $file = $request->file('surat_penawaran_kerjasama');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/surat_penawaran_kerjasama', $filename);
-            $upload->surat_penawaran_kerjasama = $filename;
-            $upload->save();
-        }
-        if ($request->hasFile('surat_kuasa_pimpinan')) {
-            $file = $request->file('surat_kuasa_pimpinan');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/surat_kuasa_pimpinan', $filename);
-            $upload->surat_kuasa_pimpinan = $filename;
-            $upload->save();
-        }
-        if ($request->hasFile('sertifikat_dewan_pers')) {
-            $file = $request->file('sertifikat_dewan_pers');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/sertifikat_dewan_pers', $filename);
-            $upload->sertifikat_dewan_pers = $filename;
-            $upload->save();
-        }
-        if ($request->hasFile('organisasi_kewartanan')) {
-            $file = $request->file('organisasi_kewartanan');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/organisasi_kewartanan', $filename);
-            $upload->organisasi_kewartanan = $filename;
-            $upload->save();
-        }
-        if ($request->hasFile('surat_pernyataan_aktif')) {
-            $file = $request->file('surat_pernyataan_aktif');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/surat_pernyataan_aktif', $filename);
-            $upload->surat_pernyataan_aktif = $filename;
-            $upload->save();
-        }
-        if ($request->hasFile('kartu_pers')) {
-            $file = $request->file('kartu_pers');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/kartu_pers', $filename);
-            $upload->kartu_pers = $filename;
-            $upload->save();
-        }
-        if ($request->hasFile('sertifikat_ukw')) {
-            $file = $request->file('sertifikat_ukw');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/sertifikat_ukw', $filename);
-            $upload->sertifikat_ukw = $filename;
-            $upload->save();
+            if ($request->hasFile("$value->kode")) {
+                $file = $request->file("$value->kode");
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('public/' . $value->kode, $filename);
+                $upload_dokumen = new UploadPersyaratan([
+                    'perusahaan_id' => $id_perusahaan,
+                    'dokumensyarat_id' => $value->id,
+                    'status' => $request->status,
+                    'file' => $filename,
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'created_by' => Auth::id(),
+                ]);
+                $upload_dokumen->save();
+            }
         }
 
+        //redirect ke index
         return response()->json([
             'status' => 'success',
             'message' => 'Upload Persyaratan Berhasil',
@@ -178,12 +104,12 @@ class UploadPersyaratanController extends Controller
         ]);
     }
 
-    //Tampilan riwayat upload user
+    //Tampilan riwayat setelah user upload
     public function index(Request $request)
     {
         $title['title'] = 'Riwayat Upload Persyaratan';
         if ($request->ajax()) {
-            $data = UploadPersyaratan::select('id', 'users_id', 'nama_perusahaan', 'status', 'created_at')->where('users_id', Auth::id())->get();
+            $data = Perusahaan::select('id', 'nama_perusahaan', 'status',  'created_at')->where('users_id', Auth::id())->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
@@ -210,9 +136,9 @@ class UploadPersyaratanController extends Controller
     public function review(Request $request)
     {
         $title['title'] = 'Review Persyaratan';
-        $upload = UploadPersyaratan::where('status', 'menunggu verifikasi')->get();
+        $upload = Perusahaan::where('status', 'menunggu verifikasi')->get();
         if ($request->ajax()) {
-            $data = UploadPersyaratan::select('id', 'users_id', 'nama_perusahaan', 'status')->where('status', 'menunggu verifikasi')->get();
+            $data = Perusahaan::select('id', 'users_id', 'nama_perusahaan', 'status')->where('status', 'menunggu verifikasi')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
@@ -240,14 +166,22 @@ class UploadPersyaratanController extends Controller
     public function detail($id)
     {
         $title['title'] = 'Detail Upload Persyaratan';
-        $upload = UploadPersyaratan::findOrFail($id);
-        return view('uploadpersyaratan.detail', $title, compact('upload'));
+        $perusahaan = Perusahaan::findOrFail($id);
+        // $upload = UploadPersyaratan::where('perusahaan_id', $id)->firstOrFail();
+        $upload = DB::table('m_dokumensyarat')
+            ->join('upload_persyaratans', 'm_dokumensyarat.id', '=', 'upload_persyaratans.dokumensyarat_id')
+            ->select('upload_persyaratans.*', 'm_dokumensyarat.nama_dokumen', 'm_dokumensyarat.kode')
+            ->whereColumn('m_dokumensyarat.id', '=', 'upload_persyaratans.dokumensyarat_id')
+            ->where('upload_persyaratans.perusahaan_id',  $id)
+            ->get();
+        // dd($upload);
+        return view('uploadpersyaratan.detail', $title, compact('upload', 'perusahaan'));
     }
 
     public function verify($id)
     {
         $upload = UploadPersyaratan::find($id);
-        $upload->status = 'terverifikasi';
+        $upload->status = 'Terverifikasi';
         $upload->save();
 
         return response()->json([
@@ -260,7 +194,7 @@ class UploadPersyaratanController extends Controller
     public function reject($id)
     {
         $upload = UploadPersyaratan::find($id);
-        $upload->status = 'ditolak';
+        $upload->status = 'Ditolak';
         $upload->save();
 
         return response()->json([
@@ -279,9 +213,9 @@ class UploadPersyaratanController extends Controller
         // Menampilkan PDF di PDF viewer
         $pdfUrl = route('uploadpersyaratan.fetchPDF', $id);
 
-        return view('uploadpersyaratan.pdfviewer', compact('pdfUrl'))->with([
+        return view('uploadpersyaratan.pdfviewer')->with([
             'FILE_PDF' => request()->input('file'),
-            'URL_ASSET' => asset('pdfjs-4.3.136-dist'),
+            'URL_ASSET' => asset('frontend/pdfjs'),
         ]);
     }
 
@@ -292,7 +226,8 @@ class UploadPersyaratanController extends Controller
             abort(404, 'PDF Tidak Ditemukan');
         }
 
-        $filePath = Storage::path($pdf->path);
+        $filePath = Storage::disk('public')->url($pdf->path);
+        // $filePath = storage_path('app/public/'.$file);
         $fileName = basename($pdf->path);
 
         return response()->streamDownload(function () use ($filePath) {

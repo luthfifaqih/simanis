@@ -11,13 +11,14 @@
     <link rel="stylesheet" href="{{ asset('frontend/pdfjs/web/viewer.css') }}">
 
     <link rel="resource" type="application/l10n" href="{{ asset('frontend/pdfjs/web/locale/locale.json') }}">
-    <script src="{{ asset('frontend/pdfjs/build/pdf.mjs') }}"></script>
+    <script type="module" src="{{ asset('frontend/pdfjs/build/pdf.mjs') }}"></script>
 
     <script>
         const FILE_PDF = "{{ request()->input('file') }}";
         const URL_ASSET = "{{ asset('frontend/pdfjs') }}";
+        console.log(FILE_PDF);
     </script>
-    <script src="{{ asset('frontend/pdfjs/web/viewer.mjs') }}"></script>
+    <script type="module" src="{{ asset('frontend/pdfjs/web/viewer.mjs') }}"></script>
 
 </head>
 
@@ -618,7 +619,7 @@
     </div> <!-- outerContainer -->
     <div id="printContainer"></div>
 </body>
-<script>
+{{-- <script>
     var scale = 1.5;
     var viewport = page.getViewport({
         scale: scale,
@@ -643,6 +644,6 @@
         viewport: viewport
     };
     page.render(renderContext);
-</script>
+</script> --}}
 
 </html>

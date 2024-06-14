@@ -58,7 +58,31 @@
                 },
                 {
                     data: 'status',
-                    name: 'status'
+                    name: 'status',
+                    render: function(data, type, row) {
+                        var badgeClass = '';
+                        var badgeText = '';
+
+                        switch (data) {
+                            case 'Menunggu verifikasi':
+                                badgeClass = 'badge badge-warning';
+                                badgeText = 'Menunggu verifikasi';
+                                break;
+                            case 'Terverifikasi':
+                                badgeClass = 'badge badge-light-success';
+                                badgeText = 'Terverifikasi';
+                                break;
+                            case 'Ditolak':
+                                badgeClass = 'badge badge-light-danger';
+                                badgeText = 'Ditolak';
+                                break;
+                            default:
+                                badgeClass = 'badge badge-secondary';
+                                badgeText = data;
+                        }
+
+                        return '<span class="' + badgeClass + '">' + badgeText + '</span>';
+                    }
                 },
                 {
                     data: 'action',

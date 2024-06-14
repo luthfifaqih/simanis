@@ -13,7 +13,7 @@
                             <!--begin::Aside-->
                             <div class="d-flex flex-row-auto w-100 w-lg-300px">
                                 <!--begin::Nav-->
-                                <div class="stepper-nav flex-cente">
+                                <div class="stepper-nav">
                                     <!--begin::Step 1-->
                                     <div class="stepper-item me-5 current" data-kt-stepper-element="nav">
                                         <!--begin::Wrapper-->
@@ -97,379 +97,169 @@
                             <!--begin::Content-->
                             <div class="flex-row-fluid">
                                 <!--begin::Form-->
-                                <form action="{{ route('uploadpersyaratan.store') }}" method="POST"
-                                    class="form w-lg-500px mx-auto" novalidate="novalidate">
+                                <form action="{{ route('uploadpersyaratan.store') }}" method="POST" class="form mx-auto"
+                                    novalidate="novalidate">
                                     @csrf
                                     <!--begin::Group-->
-                                    <div class="mb-5">
-                                        <!--begin::Step 1-->
-                                        <div class="flex-column current" data-kt-stepper-element="content">
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">Nama Perusahaan</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <input type="text" class="form-control form-control-solid"
-                                                    name="nama_perusahaan" placeholder="Masukan nama perusahaan" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">Akta Pendirian</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <input type="file" class="form-control form-control-solid"
-                                                    name="akta_pendirian" accept="application/pdf" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">NIB / SIUP</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <input type="file" class="form-control form-control-solid"
-                                                    name="nib_siup" accept="application/pdf" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">NPWP Perusahaan</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <input type="file" class="form-control form-control-solid"
-                                                    name="npwp_perusahaan" accept="application/pdf" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">Nomor PKP</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <input type="file" class="form-control form-control-solid"
-                                                    name="nomor_pkp" accept="application/pdf" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">SPT Tahunan</label>
-                                                <!--end::Label-->
-                                                <!--begin::Input-->
-                                                <input type="file" class="form-control form-control-solid"
-                                                    name="spt_tahunan" accept="application/pdf" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">Domisili Perusahaan</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <input type="file" class="form-control form-control-solid"
-                                                    name="domisili_perusahaan" accept="application/pdf" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">Nama Direktur</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <input type="text" class="form-control form-control-solid"
-                                                    name="nama_direktur" placeholder="Masukan nama direktur" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">KTP Direktur</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <input type="file" class="form-control form-control-solid"
-                                                    name="ktp_direktur" accept="application/pdf" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">Surat Penawaran Kerjasama</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <input type="file" class="form-control form-control-solid"
-                                                    name="surat_penawaran_kerjasama" accept="application/pdf" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">Surat Kuasa Pimpinan</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <input type="file" class="form-control form-control-solid"
-                                                    name="surat_kuasa_pimpinan" accept="application/pdf" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-                                        </div>
-                                        <!--begin::Step 1-->
-
-                                        <!--begin::Step 1-->
-                                        <div class="flex-column" data-kt-stepper-element="content">
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">Nama Media</label>
-                                                <!--end::Label-->
-                                                <!--begin::Input-->
-                                                <input type="text" class="form-control form-control-solid"
-                                                    name="nama_media" placeholder="Masukan nama media" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">Jenis Media</label>
-                                                <!--end::Label-->
-                                                <div class="d-flex align-items-center">
-                                                    <!--begin::Radio-->
-                                                    <div class="form-check form-check-custom form-check-solid mb-5 me-3">
-                                                        <!--begin::Input-->
-                                                        <input class="form-check-input me-3" name="jenis_media"
-                                                            type="radio" value="online" id="jenis_media_online" />
-                                                        <!--end::Input-->
-                                                        <!--begin::Label-->
-                                                        <label class="form-check-label" for="jenis_media_online">
-                                                            <div class="fw-semibold text-gray-800">Online</div>
-                                                        </label>
-                                                        <!--end::Label-->
+                                    <div class="container">
+                                        <div class="row">
+                                            <!-- Step 1 -->
+                                            <div class="flex-column current col-12" data-kt-stepper-element="content">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-10">
+                                                        <label class="required form-label">Nama Perusahaan</label>
+                                                        <input type="text" class="form-control form-control-solid"
+                                                            name="nama_perusahaan" placeholder="Masukan nama perusahaan" />
                                                     </div>
-                                                    <!--end::Radio-->
-                                                    <!--begin::Input (for Online)-->
-                                                    <div class="d-none flex-grow-1" id="url_media_group">
-                                                        <input type="url" class="form-control form-control-solid"
-                                                            name="url_media" placeholder="Masukan URL media" />
+                                                    <div class="col-md-6 mb-10">
+                                                        <label class="required form-label">Nama Direktur</label>
+                                                        <input type="text" class="form-control form-control-solid"
+                                                            name="nama_direktur" placeholder="Masukan nama direktur" />
                                                     </div>
-                                                    <!--end::Input-->
                                                 </div>
-                                                <!--begin::Radio-->
-                                                <div class="form-check form-check-custom form-check-solid mb-5">
-                                                    <!--begin::Input-->
-                                                    <input class="form-check-input me-3" name="jenis_media"
-                                                        type="radio" value="cetak" id="jenis_media_cetak" />
-                                                    <!--end::Input-->
-                                                    <!--begin::Label-->
-                                                    <label class="form-check-label" for="jenis_media_cetak">
-                                                        <div class="fw-semibold text-gray-800">Cetak</div>
-                                                    </label>
-                                                    <!--end::Label-->
+                                                <div class="row">
+                                                    @foreach ($perusahaan as $value)
+                                                        <div class="col-md-6 mb-10">
+                                                            <label
+                                                                class="{{ $value->required == 1 ? 'required' : '' }} form-label">{{ $value->nama_dokumen }}</label>
+                                                            <input type="file" class="form-control form-control-solid"
+                                                                name="{{ $value->kode }}" accept="application/pdf"
+                                                                {{ $value->required == 1 ? 'required' : '' }} />
+                                                        </div>
+                                                    @endforeach
                                                 </div>
-                                                <!--end::Radio-->
                                             </div>
-                                            <!--end::Input group-->
-                                            <!--begin::Input group (for Cetak)-->
-                                            <div class="fv-row mb-10 d-none" id="klasifikasi_media_group">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">Klasifikasi Media</label>
-                                                <!--end::Label-->
-                                                <!--begin::Radio Group-->
-                                                <div class="d-flex">
-                                                    <!--begin::Radio-->
-                                                    <div class="form-check form-check-custom form-check-solid mb-5 me-5">
-                                                        <!--begin::Input-->
-                                                        <input class="form-check-input me-3" name="klasifikasi_media"
-                                                            type="radio" value="lokal" id="klasifikasi_media_lokal" />
-                                                        <!--end::Input-->
-                                                        <!--begin::Label-->
-                                                        <label class="form-check-label" for="klasifikasi_media_lokal">
-                                                            <div class="fw-semibold text-gray-800">Lokal</div>
-                                                        </label>
-                                                        <!--end::Label-->
+                                            <!-- End Step 1 -->
+
+                                            <!-- Step 2 -->
+                                            <div class="flex-column col-12" data-kt-stepper-element="content">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-10">
+                                                        <label class="required form-label">Nama Media</label>
+                                                        <input type="text" class="form-control form-control-solid"
+                                                            name="nama_media" placeholder="Masukan nama media" />
                                                     </div>
-                                                    <!--end::Radio-->
-                                                    <!--begin::Radio-->
-                                                    <div class="form-check form-check-custom form-check-solid mb-5 me-5">
-                                                        <!--begin::Input-->
-                                                        <input class="form-check-input me-3" name="klasifikasi_media"
-                                                            type="radio" value="regional"
-                                                            id="klasifikasi_media_regional" />
-                                                        <!--end::Input-->
-                                                        <!--begin::Label-->
-                                                        <label class="form-check-label" for="klasifikasi_media_regional">
-                                                            <div class="fw-semibold text-gray-800">Regional</div>
-                                                        </label>
-                                                        <!--end::Label-->
+                                                    <div class="col-md-6 mb-10">
+                                                        <label class="required form-label">Jenis Media</label>
+                                                        <div class="d-flex align-items-center">
+                                                            <div
+                                                                class="form-check form-check-custom form-check-solid mb-5 me-3">
+                                                                <input class="form-check-input me-3" name="jenis_media"
+                                                                    type="radio" value="online" id="jenis_media_online" />
+                                                                <label class="form-check-label" for="jenis_media_online">
+                                                                    <div class="fw-semibold text-gray-800">Online</div>
+                                                                </label>
+                                                            </div>
+                                                            <div class="d-none flex-grow-1" id="url_media_group">
+                                                                <input type="url"
+                                                                    class="form-control form-control-solid" name="url_media"
+                                                                    placeholder="Masukan URL media" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-check form-check-custom form-check-solid mb-5">
+                                                            <input class="form-check-input me-3" name="jenis_media"
+                                                                type="radio" value="cetak" id="jenis_media_cetak" />
+                                                            <label class="form-check-label" for="jenis_media_cetak">
+                                                                <div class="fw-semibold text-gray-800">Cetak</div>
+                                                            </label>
+                                                        </div>
                                                     </div>
-                                                    <!--end::Radio-->
-                                                    <!--begin::Radio-->
-                                                    <div class="form-check form-check-custom form-check-solid mb-5">
-                                                        <!--begin::Input-->
-                                                        <input class="form-check-input me-3" name="klasifikasi_media"
-                                                            type="radio" value="nasional"
-                                                            id="klasifikasi_media_nasional" />
-                                                        <!--end::Input-->
-                                                        <!--begin::Label-->
-                                                        <label class="form-check-label" for="klasifikasi_media_nasional">
-                                                            <div class="fw-semibold text-gray-800">Nasional</div>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                    </div>
-                                                    <!--end::Radio-->
                                                 </div>
-                                                <!--end::Radio Group-->
-                                            </div>
-                                            <!--end::Input group-->
+                                                <div class="row d-none" id="klasifikasi_media_group">
+                                                    <div class="col-md-6 mb-10">
+                                                        <label class="required form-label">Klasifikasi Media</label>
+                                                        <div class="d-flex">
+                                                            <div
+                                                                class="form-check form-check-custom form-check-solid mb-5 me-5">
+                                                                <input class="form-check-input me-3"
+                                                                    name="klasifikasi_media" type="radio"
+                                                                    value="lokal" id="klasifikasi_media_lokal" />
+                                                                <label class="form-check-label"
+                                                                    for="klasifikasi_media_lokal">
+                                                                    <div class="fw-semibold text-gray-800">Lokal</div>
+                                                                </label>
+                                                            </div>
+                                                            <div
+                                                                class="form-check form-check-custom form-check-solid mb-5 me-5">
+                                                                <input class="form-check-input me-3"
+                                                                    name="klasifikasi_media" type="radio"
+                                                                    value="regional" id="klasifikasi_media_regional" />
+                                                                <label class="form-check-label"
+                                                                    for="klasifikasi_media_regional">
+                                                                    <div class="fw-semibold text-gray-800">Regional
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                            <div
+                                                                class="form-check form-check-custom form-check-solid mb-5">
+                                                                <input class="form-check-input me-3"
+                                                                    name="klasifikasi_media" type="radio"
+                                                                    value="nasional" id="klasifikasi_media_nasional" />
+                                                                <label class="form-check-label"
+                                                                    for="klasifikasi_media_nasional">
+                                                                    <div class="fw-semibold text-gray-800">Nasional
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-10">
+                                                        <label class="required form-label">Domisili Media</label>
+                                                        <input type="text" class="form-control form-control-solid"
+                                                            name="domisili_media" placeholder="Masukan domisili media" />
+                                                    </div>
 
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">Domisili Media</label>
-                                                <!--end::Label-->
-                                                <!--begin::Input-->
-                                                <input type="text" class="form-control form-control-solid"
-                                                    name="domisili_media" placeholder="Masukan domisili media" />
-                                                <!--end::Input-->
+                                                    @foreach ($media as $value)
+                                                        <div class="col-md-6 mb-10">
+                                                            <label
+                                                                class="{{ $value->required == 1 ? 'required' : '' }} form-label">{{ $value->nama_dokumen }}</label>
+                                                            <input type="file" class="form-control form-control-solid"
+                                                                name="{{ $value->kode }}" accept="application/pdf"
+                                                                {{ $value->required == 1 ? 'required' : '' }} />
+                                                        </div>
+                                                    @endforeach
+                                                </div>
                                             </div>
-                                            <!--end::Input group-->
+                                            <!-- End Step 2 -->
 
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">Sertifikat Dewan Pers</label>
-                                                <!--end::Label-->
-                                                <!--begin::Input-->
-                                                <input type="file" class="form-control form-control-solid"
-                                                    name="sertifikat_dewan_pers" accept="application/pdf" />
-                                                <!--end::Input-->
+                                            <!-- Step 3 -->
+                                            <div class="flex-column col-12" data-kt-stepper-element="content">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-10">
+                                                        <label class="required form-label">Nama Jurnalis</label>
+                                                        <input type="text" class="form-control form-control-solid"
+                                                            name="nama_jurnalis" placeholder="Masukan nama lengkap" />
+                                                    </div>
+                                                    <div class="col-md-6 mb-10">
+                                                        <label class="required form-label">Email Jurnalis</label>
+                                                        <input type="email" class="form-control form-control-solid"
+                                                            name="email_jurnalis" placeholder="Masukan email" />
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-10">
+                                                        <label class="required form-label">Nomor Kontak
+                                                            Jurnalis</label>
+                                                        <input type="text" class="form-control form-control-solid"
+                                                            name="nomor_kontak_jurnalis" placeholder="Masukan nomor" />
+                                                    </div>
+                                                    @foreach ($jurnalis as $value)
+                                                        <div class="col-md-6 mb-10">
+                                                            <label
+                                                                class="{{ $value->required == 1 ? 'required' : '' }} form-label">{{ $value->nama_dokumen }}</label>
+                                                            <input type="file" class="form-control form-control-solid"
+                                                                name="{{ $value->kode }}" accept="application/pdf"
+                                                                {{ $value->required == 1 ? 'required' : '' }} />
+                                                        </div>
+                                                    @endforeach
+                                                </div>
                                             </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">Organisasi Kewartanan</label>
-                                                <!--end::Label-->
-                                                <!--begin::Input-->
-                                                <input type="file" class="form-control form-control-solid"
-                                                    name="organisasi_kewartanan" accept="application/pdf" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">Surat Pernyataan aktif melakukan
-                                                    penerbitan Media 2 Tahun terakhir</label>
-                                                <!--end::Label-->
-                                                <!--begin::Input-->
-                                                <input type="file" class="form-control form-control-solid"
-                                                    name="surat_pernyataan_aktif" accept="application/pdf" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
+                                            <!-- End Step 3 -->
                                         </div>
-                                        <!--begin::Step 1-->
-
-                                        <!--begin::Step 1-->
-                                        <div class="flex-column" data-kt-stepper-element="content">
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">
-                                                    Nama Jurnalis
-                                                </label>
-                                                <!--end::Label-->
-                                                <!--begin::Input-->
-                                                <input type="text" class="form-control form-control-solid"
-                                                    name="nama_jurnalis" placeholder="Masukan nama lengkap" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">
-                                                    Email Jurnalis
-                                                </label>
-                                                <!--end::Label-->
-                                                <!--begin::Input-->
-                                                <input type="email" class="form-control form-control-solid"
-                                                    name="email_jurnalis" placeholder="Masukan email" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">
-                                                    Nomor Kontak Jurnalis
-                                                </label>
-                                                <!--end::Label-->
-                                                <!--begin::Input-->
-                                                <input type="text" class="form-control form-control-solid"
-                                                    name="nomor_kontak_jurnalis" placeholder="Masukan nomor" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">
-                                                    Kartu Pers
-                                                </label>
-                                                <!--end::Label-->
-                                                <!--begin::Input-->
-                                                <input type="file" class="form-control form-control-solid"
-                                                    name="kartu_pers" accept="application/pdf" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-10">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">
-                                                    Sertifikat UKW
-                                                </label>
-                                                <!--end::Label-->
-                                                <!--begin::Input-->
-                                                <input type="file" class="form-control form-control-solid"
-                                                    name="sertifikat_ukw" accept="application/pdf" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-                                        </div>
-                                        <!--begin::Step 1-->
                                     </div>
-                                    <!--end::Group-->
+
 
                                     <!--begin::Actions-->
                                     <div class="d-flex flex-stack">

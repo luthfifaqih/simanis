@@ -60,11 +60,49 @@
                 },
                 {
                     data: 'status',
-                    name: 'status'
+                    name: 'status',
+                    render: function(data, type, row) {
+                        var badgeClass = '';
+                        var badgeText = '';
+
+                        switch (data) {
+                            case 'Menunggu verifikasi':
+                                badgeClass = 'badge badge-light-warning';
+                                badgeText = 'Menunggu verifikasi';
+                                break;
+                            case 'Terverifikasi':
+                                badgeClass = 'badge badge-light-success';
+                                badgeText = 'Terverifikasi';
+                                break;
+                            case 'Ditolak':
+                                badgeClass = 'badge badge-light-danger';
+                                badgeText = 'Ditolak';
+                                break;
+                            default:
+                                badgeClass = 'badge badge-secondary';
+                                badgeText = data;
+                        }
+
+                        return '<span class="' + badgeClass + '">' + badgeText + '</span>';
+                    }
                 },
                 {
                     data: 'created_at',
-                    name: 'created_at'
+                    name: 'created_at',
+                    render: function(data) {
+                        const date = new Date(data);
+                        const dateString = date.toLocaleDateString('id-ID', {
+                            year: 'numeric',
+                            month: 'numeric',
+                            day: 'numeric',
+                        });
+                        const timeString = date.toLocaleTimeString('id-ID', {
+                            hour: 'numeric',
+                            minute: 'numeric',
+                            second: 'numeric',
+                        });
+                        return `${dateString} ${timeString}`;
+                    }
                 },
                 {
                     data: 'action',
