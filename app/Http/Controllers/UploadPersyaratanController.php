@@ -174,21 +174,21 @@ class UploadPersyaratanController extends Controller
             ->whereColumn('m_dokumensyarat.id', '=', 'upload_persyaratans.dokumensyarat_id')
             ->where('upload_persyaratans.perusahaan_id',  $id)
             ->get();
-        // dd($upload);
+
         return view('uploadpersyaratan.detail', $title, compact('upload', 'perusahaan'));
     }
 
     public function verify($id)
     {
-        $upload = UploadPersyaratan::find($id);
-        $upload->status = 'Terverifikasi';
-        $upload->save();
+        $perusahaan = Perusahaan::find($id);
+        if ($perusahaan) {
+            $perusahaan->status = 'Terverifikasi';
+            $perusahaan->save();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Persyaratan berhasil diverifikasi',
-            'url' => route('uploadpersyaratan.review')
-        ]);
+            return redirect()->route('verifikasi.review')->with('success', 'Dokumen berhasil diverifikasi.');
+        } else {
+            abort(404, 'Perusahaan tidak ditemukan');
+        }
     }
 
     public function reject($id)
@@ -200,7 +200,7 @@ class UploadPersyaratanController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Persyaratan ditolak',
-            'url' => route('uploadpersyaratan.review')
+            'url' => route('verifikasi.review')
         ]);
     }
 

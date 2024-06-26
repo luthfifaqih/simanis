@@ -7,116 +7,196 @@
                 <div class="card">
                     <div class="card-body bg-white" style="border-radius: 5px">
                         <!--begin::Form-->
-                        <form id="kt_docs_formvalidation_text" class="form" action="" autocomplete="off"
-                            method="POST">
-                            @csrf
-                            <!--begin::Input group-->
-                            <div class="fv-row mb-10">
+                        {{-- <form id="kt_docs_formvalidation_text" class="form" action="" autocomplete="off"
+                            method="POST"> --}}
+                        {{-- @csrf --}}
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-10">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Nama Perusahaan</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+
+                            <input type="text" value="{{ $perusahaan->nama_perusahaan }}"
+                                class="form-control form-control-solid mb-3 mb-lg-0" readonly>
+
+                            <!--end::Input-->
+                        </div>
+                        <div class="fv-row mb-10">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Nama Direktur</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+
+                            <input type="text" value="{{ $perusahaan->nama_direktur }}"
+                                class="form-control form-control-solid mb-3 mb-lg-0" readonly>
+
+                            <!--end::Input-->
+                        </div>
+                        <div class="fv-row mb-10">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Nama Media</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+
+                            <input type="text" value="{{ $perusahaan->nama_media }}"
+                                class="form-control form-control-solid mb-3 mb-lg-0" readonly>
+
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <div class="fv-row mb-10">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Jenis Media</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+
+                            <input type="text" value="{{ $perusahaan->jenis_media }}"
+                                class="form-control form-control-solid mb-3 mb-lg-0" readonly>
+
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <div class="fv-row mb-10">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Jenis Media</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+
+                            <input type="text" value="{{ $perusahaan->url_media }}"
+                                class="form-control form-control-solid mb-3 mb-lg-0" readonly>
+
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <div class="fv-row mb-10">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Klasifikasi Media</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+
+                            <input type="text" value="{{ $perusahaan->klasifikasi_media }}"
+                                class="form-control form-control-solid mb-3 mb-lg-0" readonly>
+
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <div class="fv-row mb-10">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Domisili Media</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+
+                            <input type="text" value="{{ $perusahaan->domisili_media }}"
+                                class="form-control form-control-solid mb-3 mb-lg-0" readonly>
+
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <div class="fv-row mb-10">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Nama Jurnalis</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+
+                            <input type="text" value="{{ $perusahaan->nama_jurnalis }}"
+                                class="form-control form-control-solid mb-3 mb-lg-0" readonly>
+
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <div class="fv-row mb-10">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Email Jurnalis</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+
+                            <input type="text" value="{{ $perusahaan->email_jurnalis }}"
+                                class="form-control form-control-solid mb-3 mb-lg-0" readonly>
+
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <div class="fv-row mb-10">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Nomor Kontak Jurnalis</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+
+                            <input type="text" value="{{ $perusahaan->nomor_kontak_jurnalis }}"
+                                class="form-control form-control-solid mb-3 mb-lg-0" readonly>
+
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        @foreach ($upload as $data)
+                            {{-- {{ dd($data) }} --}}
+                            <div class="fv-row mb-10 d-flex align-items-center">
                                 <!--begin::Label-->
-                                <label class="required fw-semibold fs-6 mb-2">Nama Perusahaan</label>
+                                <label class="required fw-semibold fs-6 mb-0 me-5">{{ $data->nama_dokumen }}</label>
                                 <!--end::Label-->
-                                <!--begin::Input-->
-
-                                <input type="text" value="{{ $perusahaan->nama_perusahaan }}"
-                                    class="form-control form-control-solid mb-3 mb-lg-0" readonly>
-
-                                <!--end::Input-->
+                                <button type="button" class="btn btn-primary"
+                                    onclick='liatberkas("{{ $data->file }}", "{{ $data->nama_dokumen }}", "{{ $data->kode }}")'>
+                                    Lihat berkas
+                                </button>
                             </div>
-                            <div class="fv-row mb-10">
-                                <!--begin::Label-->
-                                <label class="required fw-semibold fs-6 mb-2">Nama Direktur</label>
-                                <!--end::Label-->
-                                <!--begin::Input-->
 
-                                <input type="text" value="{{ $perusahaan->nama_direktur }}"
-                                    class="form-control form-control-solid mb-3 mb-lg-0" readonly>
-
-                                <!--end::Input-->
-                            </div>
-                            <!--end::Input group-->
-                            <!--begin::Input group-->
-                            @foreach ($upload as $data)
-                                {{-- {{ dd($data) }} --}}
-                                <div class="fv-row mb-10 d-flex align-items-center">
-                                    <!--begin::Label-->
-                                    <label class="required fw-semibold fs-6 mb-0 me-5">{{ $data->nama_dokumen }}</label>
-                                    <!--end::Label-->
-                                    <button type="button" class="btn btn-primary"
-                                        onclick='liatberkas("{{ $data->file }}", "{{ $data->nama_dokumen }}", "{{ $data->kode }}")'>
-                                        Lihat berkas
-                                    </button>
-                                </div>
-
-                                <!-- Modal -->
-                                <div class="modal fade" tabindex="-1" id="kt_modal_1">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h3 class="modal-title">{{ $data->nama_dokumen }}</h3>
-
-                                                <!--begin::Close-->
-                                                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
-                                                    data-bs-dismiss="modal" aria-label="Close">
-                                                    <i class="ki-duotone ki-cross fs-1">
-                                                        <span class="path1"></span><span class="path2"></span>
-                                                    </i>
-                                                </div>
-                                                <!--end::Close-->
+                            <!-- Modal -->
+                            <div class="modal fade" tabindex="-1" id="kt_modal_1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <!--begin::Close-->
+                                            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
+                                                data-bs-dismiss="modal" aria-label="Close">
+                                                <i class="ki-duotone ki-cross fs-1">
+                                                    <span class="path1"></span><span class="path2"></span>
+                                                </i>
                                             </div>
+                                            <!--end::Close-->
+                                        </div>
 
-                                            <div class="modal-body">
-                                                <iframe id="iframedok"
-                                                    src="{{ route('pdf-viewer', ['file' => $data->file]) }}" width="100%"
-                                                    height="600"></iframe>
-                                            </div>
+                                        <div class="modal-body">
+                                            <iframe id="iframedok" src="{{ route('pdf-viewer', ['file' => $data->file]) }}"
+                                                width="100%" height="600"></iframe>
+                                        </div>
 
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-warning"
-                                                    data-bs-dismiss="modal">Kembali</button>
-                                            </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-warning"
+                                                data-bs-dismiss="modal">Tutup</button>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                            </div>
+                        @endforeach
 
 
-                            <!--end::Input group-->
-                            <!--begin::Actions-->
-                            {{-- <button id="kt_docs_formvalidation_text_submit" type="submit" class="btn btn-primary"
-                                onclick="simpan()">
-                                <span class="indicator-label">
-                                    Simpan
-                                </span>
-                                <span class="indicator-progress">
-                                    Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                </span>
-                            </button>
-                            <!--end::Actions-->
-                            <!--begin::Actions-->
-                            <a href="{{ url('users') }}" id="kt_docs_formvalidation_text_submit" type="submit"
-                                class="btn btn-danger">
-                                <span class="indicator-label">
-                                    Batal
-                                </span>
-                                <span class="indicator-progress">
-                                    Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                </span>
-                            </a> --}}
-                            <!--end::Actions-->
+                        <div id="actionButtons" class="d-none d-flex gap-2">
+                            <form action="{{ route('verifikasi.verify', $perusahaan->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-success"
+                                    onclick="handleAction('accepted')">Diterima</button>
+                            </form>
+                            <form action="{{ route('verifikasi.reject', $perusahaan->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger"
+                                    onclick="handleAction('rejected')">Ditolak</button>
+                            </form>
+                        </div>
 
-                            {{-- Modal PDF --}}
 
-                            {{-- Modal PDF --}}
-                        </form>
-                        <!--end::Form-->
+
                         <script>
-                            function simpan() {
-                                Swal.fire({
-                                    title: "Berhasil",
-                                    text: "Berhasil menambah data",
-                                    icon: "success"
-                                });
-                            }
+                            const totalDocuments = {{ count($upload) }};
+                            let viewedDocuments = 0;
+                            // function simpan() {
+                            //     Swal.fire({
+                            //         title: "Berhasil",
+                            //         text: "Berhasil menambah data",
+                            //         icon: "success"
+                            //     });
+                            // }
 
                             function liatberkas(file, nama_dokumen, kode) {
                                 $("#kt_modal_1").modal('show')
@@ -125,6 +205,28 @@
                                 console.log(path);
                                 $("#iframedok").attr("src", url)
 
+                                viewedDocuments++;
+                                if (viewedDocuments === totalDocuments) {
+                                    document.getElementById('actionButtons').classList.remove('d-none');
+                                }
+                            }
+
+                            function handleAction(action) {
+                                if (action === 'accepted') {
+                                    //handle acepted action
+                                    Swal.fire({
+                                        title: "Diterima",
+                                        text: "Data telah diterima",
+                                        icon: "success"
+                                    });
+                                } else if (action === 'rejected') {
+                                    //handle rejected action
+                                    Swal.fire({
+                                        title: "Ditolak",
+                                        text: "Data telah ditolak",
+                                        icon: "error"
+                                    });
+                                }
                             }
                         </script>
                     </div>
