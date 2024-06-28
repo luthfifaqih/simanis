@@ -71,7 +71,7 @@ class UploadPersyaratanController extends Controller
             'jenis_media' => $request->jenis_media,
             'url_media' => $request->url_media,
             'klasifikasi_media' => $request->klasifikasi_media,
-            'status' => 'Menunggu verifikasi',
+            'status' => 'menunggu_verifikasi',
         ]);
         $upload->save();
         //mengambil id dari model
@@ -135,10 +135,10 @@ class UploadPersyaratanController extends Controller
     //Tampilan table review verfikator
     public function review(Request $request)
     {
-        $title['title'] = 'Review Persyaratan';
-        $upload = Perusahaan::where('status', 'menunggu verifikasi')->get();
+        $title['title'] = 'Verifikasi Berkas';
+        $upload = Perusahaan::where('status', 'menunggu_verifikasi', 'terverifikasi')->get();
         if ($request->ajax()) {
-            $data = Perusahaan::select('id', 'users_id', 'nama_perusahaan', 'status')->where('status', 'menunggu verifikasi')->get();
+            $data = Perusahaan::select('id', 'users_id', 'nama_perusahaan', 'status')->where('status', 'menunggu_verifikasi')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
@@ -161,6 +161,35 @@ class UploadPersyaratanController extends Controller
         }
         return view('uploadpersyaratan.review', $title, compact('upload'));
     }
+    //Tampilan table riwayat verfikator
+    public function riwayat(Request $request)
+    {
+        $title['title'] = 'Riwayat Verifikasi Persyaratan';
+        $upload = Perusahaan::where('status', 'terverifikasi', 'ditolak')->get();
+        if ($request->ajax()) {
+            $data = Perusahaan::select('id', 'users_id', 'nama_perusahaan', 'status')->where('status', 'terverifikasi', 'ditolak')->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($data) {
+                    $button = '<div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="actionDropdown' . $data->id . '" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Pilih Aksi
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="actionDropdown' . $data->id . '">
+                                        <li><a class="dropdown-item" href="' . route('verifikasi.detail', $data->id) . '"><i class="ki-duotone ki-eye fs-5">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                        </i> Detail</a></li>
+                                    </ul>
+                                </div>';
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('uploadpersyaratan.riwayat', $title, compact('upload'));
+    }
 
     //menampilkan dalaman halaman ketika klik aksi detail
     public function detail($id)
@@ -182,10 +211,10 @@ class UploadPersyaratanController extends Controller
     {
         $perusahaan = Perusahaan::find($id);
         if ($perusahaan) {
-            $perusahaan->status = 'Terverifikasi';
+            $perusahaan->status = 'terverifikasi';
             $perusahaan->save();
 
-            return redirect()->route('verifikasi.review')->with('success', 'Dokumen berhasil diverifikasi.');
+            return redirect()->route('verifikasi.riwayat')->with('success', 'Dokumen berhasil diverifikasi.');
         } else {
             abort(404, 'Perusahaan tidak ditemukan');
         }
@@ -194,13 +223,13 @@ class UploadPersyaratanController extends Controller
     public function reject($id)
     {
         $upload = UploadPersyaratan::find($id);
-        $upload->status = 'Ditolak';
+        $upload->status = 'ditolak';
         $upload->save();
 
         return response()->json([
             'status' => 'success',
             'message' => 'Persyaratan ditolak',
-            'url' => route('verifikasi.review')
+            'url' => route('verifikasi.riwayat')
         ]);
     }
 

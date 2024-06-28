@@ -114,6 +114,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::middleware(['role:verifikator'], function () {
     });
     Route::get('verifikasi/review', [UploadPersyaratanController::class, 'review'])->name('verifikasi.review');
+    Route::get('verifikasi/riwayat', [UploadPersyaratanController::class, 'riwayat'])->name('verifikasi.riwayat');
     Route::get('verifikasi/{id}/detail', [UploadPersyaratanController::class, 'detail'])->name('verifikasi.detail');
     Route::post('verifikasi/{id}/verify', [UploadPersyaratanController::class, 'verify'])->name('verifikasi.verify');
     Route::post('verifikasi/{id}/reject', [UploadPersyaratanController::class, 'reject'])->name('verifikasi.reject');

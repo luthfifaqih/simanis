@@ -66,15 +66,15 @@
                         var badgeText = '';
 
                         switch (data) {
-                            case 'Menunggu verifikasi':
+                            case 'menunggu_verifikasi':
                                 badgeClass = 'badge badge-light-warning';
                                 badgeText = 'Menunggu verifikasi';
                                 break;
-                            case 'Terverifikasi':
+                            case 'terverifikasi':
                                 badgeClass = 'badge badge-light-success';
                                 badgeText = 'Terverifikasi';
                                 break;
-                            case 'Ditolak':
+                            case 'ditolak':
                                 badgeClass = 'badge badge-light-danger';
                                 badgeText = 'Ditolak';
                                 break;

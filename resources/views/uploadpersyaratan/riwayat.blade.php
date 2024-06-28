@@ -49,7 +49,7 @@
             processing: true,
             serverSide: true,
             ajax: {
-                url: "{{ route('verifikasi.review') }}",
+                url: "{{ route('verifikasi.riwayat') }}",
                 type: 'GET',
             },
             columns: [{
@@ -63,22 +63,18 @@
                         var badgeClass = '';
                         var badgeText = '';
 
-                        switch (data) {
-                            case 'menunggu_verifikasi':
-                                badgeClass = 'badge badge-warning';
-                                badgeText = 'Menunggu verifikasi';
-                                break;
-                            case 'terverifikasi':
-                                badgeClass = 'badge badge-light-success';
-                                badgeText = 'Terverifikasi';
-                                break;
-                            case 'ditolak':
-                                badgeClass = 'badge badge-light-danger';
-                                badgeText = 'Ditolak';
-                                break;
-                            default:
-                                badgeClass = 'badge badge-secondary';
-                                badgeText = data;
+                        if (data === 'menunggu_verifikasi') {
+                            badgeClass = 'badge badge-warning';
+                            badgeText = 'Menunggu verifikasi';
+                        } else if (data === 'terverifikasi') {
+                            badgeClass = 'badge badge-success';
+                            badgeText = 'Terverifikasi';
+                        } else if (data === 'ditolak') {
+                            badgeClass = 'badge badge-danger';
+                            badgeText = 'Ditolak';
+                        } else {
+                            badgeClass = 'badge badge-secondary';
+                            badgeText = data;
                         }
 
                         return '<span class="' + badgeClass + '">' + badgeText + '</span>';

@@ -330,6 +330,19 @@
                         </a>
                         <!--end:Menu link-->
                     </div>
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a href="{{ route('verifikasi.riwayat') }}" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-file-added">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Riwayat Verifikasi Berkas</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
                     <div class="separator border-2 my-5"></div>
                     <!--begin:Menu item-->
                     <div class="menu-item">
