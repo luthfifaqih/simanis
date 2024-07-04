@@ -165,9 +165,9 @@ class UploadPersyaratanController extends Controller
     public function riwayat(Request $request)
     {
         $title['title'] = 'Riwayat Verifikasi Persyaratan';
-        $upload = Perusahaan::where('status', 'terverifikasi', 'ditolak')->get();
+        $upload = Perusahaan::whereIn('status', ['terverifikasi', 'ditolak'])->get();
         if ($request->ajax()) {
-            $data = Perusahaan::select('id', 'users_id', 'nama_perusahaan', 'status')->where('status', 'terverifikasi', 'ditolak')->get();
+            $data = Perusahaan::select('id', 'users_id', 'nama_perusahaan', 'status')->whereIn('status', ['terverifikasi', 'ditolak'])->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
@@ -222,15 +222,15 @@ class UploadPersyaratanController extends Controller
 
     public function reject($id)
     {
-        $upload = UploadPersyaratan::find($id);
-        $upload->status = 'ditolak';
-        $upload->save();
+        $perusahaan = Perusahaan::find($id);
+        if ($perusahaan) {
+            $perusahaan->status = 'ditolak';
+            $perusahaan->save();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Persyaratan ditolak',
-            'url' => route('verifikasi.riwayat')
-        ]);
+            return redirect()->route('verifikasi.riwayat')->with('success', 'Dokumen berhasil ditolak.');
+        } else {
+            abort(404, 'Perusahaan tidak ditemukan');
+        }
     }
 
     public function showPdfViewer($id)

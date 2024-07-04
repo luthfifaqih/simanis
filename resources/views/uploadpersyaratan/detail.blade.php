@@ -7,9 +7,6 @@
                 <div class="card">
                     <div class="card-body bg-white" style="border-radius: 5px">
                         <!--begin::Form-->
-                        {{-- <form id="kt_docs_formvalidation_text" class="form" action="" autocomplete="off"
-                            method="POST"> --}}
-                        {{-- @csrf --}}
                         <!--begin::Input group-->
                         <div class="fv-row mb-10">
                             <!--begin::Label-->
@@ -131,45 +128,44 @@
                         <!--end::Input group-->
                         <!--begin::Input group-->
                         @foreach ($upload as $data)
-                            {{-- {{ dd($data) }} --}}
                             <div class="fv-row mb-10 d-flex align-items-center">
                                 <!--begin::Label-->
-                                <label class="required fw-semibold fs-6 mb-0 me-5">{{ $data->nama_dokumen }}</label>
-                                <!--end::Label-->
-                                <button type="button" class="btn btn-primary"
-                                    onclick='liatberkas("{{ $data->file }}", "{{ $data->nama_dokumen }}", "{{ $data->kode }}")'>
-                                    Lihat berkas
-                                </button>
-                            </div>
-
-                            <!-- Modal -->
-                            <div class="modal fade" tabindex="-1" id="kt_modal_1">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <!--begin::Close-->
-                                            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
-                                                data-bs-dismiss="modal" aria-label="Close">
-                                                <i class="ki-duotone ki-cross fs-1">
-                                                    <span class="path1"></span><span class="path2"></span>
-                                                </i>
+                                <label class="required fw-semibold fs-6 mb-0 me-2">{{ $data->nama_dokumen }}</label>
+                                <div class="d-flex align-items-center">
+                                    <button type="button" class="btn btn-primary me-2"
+                                        onclick='liatberkas("{{ $data->file }}", "{{ $data->nama_dokumen }}", "{{ $data->kode }}")'>
+                                        Lihat berkas
+                                    </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" tabindex="-1" id="kt_modal_1">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <!--begin::Close-->
+                                                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
+                                                        data-bs-dismiss="modal" aria-label="Close">
+                                                        <i class="ki-duotone ki-cross fs-1">
+                                                            <span class="path1"></span><span class="path2"></span>
+                                                        </i>
+                                                    </div>
+                                                    <!--end::Close-->
+                                                </div>
+                                                <div class="modal-body">
+                                                    <iframe id="iframedok"
+                                                        src="{{ route('pdf-viewer', ['file' => $data->file]) }}"
+                                                        width="100%" height="600"></iframe>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-warning"
+                                                        data-bs-dismiss="modal">Tutup</button>
+                                                </div>
                                             </div>
-                                            <!--end::Close-->
-                                        </div>
-
-                                        <div class="modal-body">
-                                            <iframe id="iframedok" src="{{ route('pdf-viewer', ['file' => $data->file]) }}"
-                                                width="100%" height="600"></iframe>
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-warning"
-                                                data-bs-dismiss="modal">Tutup</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
+
 
 
                         <div id="actionButtons" class="d-none d-flex gap-2">
@@ -215,16 +211,16 @@
                                 if (action === 'accepted') {
                                     //handle acepted action
                                     Swal.fire({
-                                        title: "Diterima",
-                                        text: "Data telah diterima",
+                                        title: "Berhasil",
+                                        text: "Data berhasil diverifikasi",
                                         icon: "success"
                                     });
                                 } else if (action === 'rejected') {
                                     //handle rejected action
                                     Swal.fire({
-                                        title: "Ditolak",
-                                        text: "Data telah ditolak",
-                                        icon: "error"
+                                        title: "Berhasil",
+                                        text: "Data berhasil ditolak",
+                                        icon: "success"
                                     });
                                 }
                             }

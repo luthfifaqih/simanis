@@ -23,7 +23,7 @@
                                     <tr class="fw-semibold fs-6 text-gray-800">
                                         <th class="min-w-200px">Nama Perusahaan</th>
                                         <th class="min-w-150px">Status</th>
-                                        <th class="min-w-200px">Action</th>
+                                        {{-- <th class="min-w-200px">Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -80,12 +80,12 @@
                         return '<span class="' + badgeClass + '">' + badgeText + '</span>';
                     }
                 },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                },
+                // {
+                //     data: 'action',
+                //     name: 'action',
+                //     orderable: false,
+                //     searchable: false
+                // },
             ]
         });
 
