@@ -142,18 +142,11 @@ class UploadPersyaratanController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
-                    $button = '<div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle" type="button" id="actionDropdown' . $data->id . '" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Pilih Aksi
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="actionDropdown' . $data->id . '">
-                                        <li><a class="dropdown-item" href="' . route('verifikasi.detail', $data->id) . '"><i class="ki-duotone ki-eye fs-5">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                            <span class="path3"></span>
-                                        </i> Detail</a></li>
-                                    </ul>
-                                </div>';
+                    $button = '<a class="btn btn-primary" href="' . route('verifikasi.detail', $data->id) . '"><i class="ki-duotone ki-eye fs-5">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i> Detail</a>';
                     return $button;
                 })
                 ->rawColumns(['action'])

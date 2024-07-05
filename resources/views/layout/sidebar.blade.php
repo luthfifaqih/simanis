@@ -154,6 +154,22 @@
                     </div>
                     <!--end:Menu item-->
                     <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('uploadpersyaratan.index') }}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-document fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Riwayat Upload Persyaratan</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    <!--end:Menu item-->
+                    <!--begin:Menu item-->
                     <div class="menu-item pt-5">
                         <!--begin:Menu content-->
                         <div class="menu-content">
@@ -181,7 +197,7 @@
                             <!--begin:Menu item-->
                             <div class="menu-item">
                                 <!--begin:Menu link-->
-                                <a class="menu-link" href="#">
+                                <a class="menu-link" href="{{ route('verifikasi.review') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -193,11 +209,11 @@
                             <!--begin:Menu item-->
                             <div class="menu-item">
                                 <!--begin:Menu link-->
-                                <a class="menu-link" href="#">
+                                <a class="menu-link" href="{{ route('verifikasi.riwayat') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">TTE Pengajuan</span>
+                                    <span class="menu-title">Riwayat Verifikasi Persyaratan</span>
                                 </a>
                                 <!--end:Menu link-->
                             </div>
@@ -206,6 +222,13 @@
                         <!--end:Menu sub-->
                     </div>
                     <!--end:Menu item-->
+                    <div class="menu-item pt-5">
+                        <!--begin:Menu content-->
+                        <div class="menu-content">
+                            <span class="menu-heading fw-bold text-uppercase fs-7">Menu Administration</span>
+                        </div>
+                        <!--end:Menu content-->
+                    </div>
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
