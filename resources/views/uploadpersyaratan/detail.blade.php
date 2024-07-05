@@ -86,16 +86,22 @@
                                 </div>
                             </div>
                             <!--end::Input group-->
-                            <!--begin::Input group-->
-                            @foreach ($upload as $data)
-                                <div class="fv-row mb-10 d-flex align-items-center">
-                                    <!--begin::Label-->
-                                    <label class="required fw-semibold fs-6 mb-0 me-2">{{ $data->nama_dokumen }}</label>
-                                    <div class="d-flex align-items-center">
-                                        <button type="button" class="btn btn-primary me-2"
-                                            onclick='liatberkas("{{ $data->file }}", "{{ $data->nama_dokumen }}", "{{ $data->kode }}")'>
-                                            Lihat berkas
-                                        </button>
+                            <div class="row">
+                                @foreach ($upload as $data)
+                                    <div class="col-lg-6 mb-5">
+                                        <!--begin::Label-->
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <label
+                                                    class="required fw-semibold fs-6 mb-0 me-2">{{ $data->nama_dokumen }}</label>
+                                            </div>
+                                            <div class="d-flex align-items-center col-lg-6">
+                                                <button type="button" class="btn btn-primary me-2"
+                                                    onclick='liatberkas("{{ $data->file }}", "{{ $data->nama_dokumen }}", "{{ $data->kode }}")'>
+                                                    Lihat berkas
+                                                </button>
+                                            </div>
+                                        </div>
                                         <!-- Modal -->
                                         <div class="modal fade" tabindex="-1" id="kt_modal_1">
                                             <div class="modal-dialog">
@@ -123,8 +129,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+
+                            </div>
+                            <!--begin::Input group-->
 
 
 
