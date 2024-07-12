@@ -247,47 +247,66 @@ License: For each use you must have a valid license purchased only from above li
                     <!--end::Card body-->
                 </div>
                 <!--end::Card-->
-                <div class="container" id="tentangkami">
-                    <!--begin::Heading-->
-                    <div class="text-center mb-6 mt-12">
-                        <!--begin::Title-->
-                        <h3 class="fs-2hx text-dark mb-5 mt-12" data-kt-scroll-offset="{default: 100, lg: 150}">
-                            Tentang Kami</h3>
-                        <!--end::Title-->
-                    </div>
-                    <!--end::Heading-->
-                    <!--begin::Row-->
-                    <div class="row align-items-center">
-                        <!-- Logo -->
-                        <div class="col-lg-4 text-center mb-4 mb-lg-0">
-                            <img src="{{ asset('frontend/assets/media/logos/logo.png') }}" alt="Logo"
-                                class="img-fluid">
-                        </div>
-                        <!-- Text Isi Konten -->
-                        <div class="col-lg-8">
-                            <p style="text-align: justify;">
-                                Sistem Manajemen Kemitraan Perusahaan Pers (SIMANIS) merupakan sebuah aplikasi berbasis
-                                digital untuk mempermudah bidang informasi dan komunikasi publik di Diskominfo Karawang
-                                dalam menjalankan
-                                monitoring media di Kabupaten Karawang. Aplikasi ini digunakan untuk penertiban
-                                administrasi
-                                kerjasama antara media dan pemerintah kabupaten Karawang yang dikoordinir oleh
-                                Diskominfo
-                                Karawang, juga menjadi alat filter dalam proses monitoring isu konten media terkait
-                                pemberitaan di Kabupaten Karawang.
-                            </p>
-                        </div>
-                    </div>
-                    <!--end::Row-->
-                </div>
+                {{-- Jika butuh kembali ke card sini untuk tentang kami --}}
                 <!--end::Container-->
-
             </div>
         </div>
-
         <!--end::Container-->
     </div>
     <!--end::How It Works Section-->
+
+    <div class="mt-20 mb-n5 position-relative z-index-2">
+        <div class="container">
+            <!--begin::Highlight-->
+            <div class="d-flex flex-stack flex-wrap flex-md-nowrap card-rounded shadow p-8 p-lg-12 mb-n5 mb-lg-n13"
+                style="background: linear-gradient(90deg, #ffffff 0%, #ffffff 100%);">
+                <!--begin::Content-->
+                <div class="my-2 me-5">
+                    <div class="container" id="tentangkami">
+                        <!--begin::Heading-->
+                        <div class="text-center mb-2 mt-5">
+                            <!--begin::Title-->
+                            <h3 class="fs-2hx text-dark mb-5 mt-12" data-kt-scroll-offset="{default: 100, lg: 150}"
+                                style="font-family: 'Roboto', sans-serif; font-weight: 700;">
+                                Tentang Kami</h3>
+                            <!--end::Title-->
+                        </div>
+                        <!--end::Heading-->
+                        <!--begin::Row-->
+                        <div class="row align-items-center">
+                            <!-- Logo -->
+                            <div class="col-lg-4 text-center mb-4 mb-lg-0">
+                                <img src="{{ asset('frontend/assets/media/logos/logo.png') }}" alt="Logo"
+                                    class="img-fluid">
+                            </div>
+                            <!-- Text Isi Konten -->
+                            <div class="col-lg-8">
+                                <p
+                                    style="text-align: justify; font-family: 'Open Sans', sans-serif; font-size: 1.1em; line-height: 1.8;">
+                                    Sistem Manajemen Kemitraan Perusahaan Pers (SIMANIS) merupakan sebuah aplikasi
+                                    berbasis
+                                    digital untuk mempermudah bidang informasi dan komunikasi publik di Diskominfo
+                                    Karawang
+                                    dalam menjalankan monitoring media di Kabupaten Karawang. Aplikasi ini digunakan
+                                    untuk
+                                    penertiban administrasi kerjasama antara media dan pemerintah kabupaten Karawang
+                                    yang
+                                    dikoordinir oleh Diskominfo Karawang, juga menjadi alat filter dalam proses
+                                    monitoring
+                                    isu konten media terkait pemberitaan di Kabupaten Karawang.
+                                </p>
+                            </div>
+                        </div>
+                        <!--end::Row-->
+                    </div>
+                </div>
+                <!--end::Content-->
+            </div>
+            <!--end::Highlight-->
+        </div>
+    </div>
+
+
     <!--begin::Footer Section-->
     <div class="mb-0">
         <!--begin::Curve top-->
@@ -361,7 +380,7 @@ License: For each use you must have a valid license purchased only from above li
 
 
             <!--begin::Separator-->
-            <div class="landing-dark-separator"></div>
+            <div class="landing-dark-separator mt-0"></div>
             <!--end::Separator-->
 
             <!--begin::Container-->
@@ -374,10 +393,6 @@ License: For each use you must have a valid license purchased only from above li
                                 <img alt="Logo" src="{{ asset('frontend/assets/media/logos/logo.png') }}"
                                     class="logo-default h-40px h-lg-40px" />
                             </a>
-                            {{-- <a href="https://siriska.karawangkab.go.id">
-                                <img alt="Logo" src="https://siriska.karawangkab.go.id/images/logo-bse.png"
-                                    class="logo-default h-40px h-lg-40px" />
-                            </a> --}}
                         </div>
                     </div>
                     <div class="col-12 col-md-9">

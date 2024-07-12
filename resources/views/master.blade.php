@@ -1,16 +1,4 @@
 <!DOCTYPE html>
-<!--
-Author: Keenthemes
-Product Name: Metronic
-Product Version: 8.1.8
-Purchase: https://1.envato.market/EA4JP
-Website: http://www.keenthemes.com
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Dribbble: www.dribbble.com/keenthemes
-Like: www.facebook.com/keenthemes
-License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
--->
 <html lang="en">
 <!--begin::Head-->
 
@@ -24,6 +12,7 @@ License: For each use you must have a valid license purchased only from above li
     <script src="{{ asset('frontend/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <link href="{{ asset('frontend/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
         type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     {{-- <script src="{{ asset('frontend/pdfjs/build/pdf.mjs') }}"></script>
     <script src="{{ asset('frontend/pdfjs/web/viewer.mjs') }}"></script> --}}
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"> --}}
@@ -3026,6 +3015,7 @@ License: For each use you must have a valid license purchased only from above li
     <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
     <script src="{{ asset('frontend/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+
     <!--end::Vendors Javascript-->
     <!--begin::Custom Javascript(used for this page only)-->
     <script src="{{ asset('frontend/assets/js/widgets.bundle.js') }}"></script>

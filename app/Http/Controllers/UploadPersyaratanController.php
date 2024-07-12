@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\StatusChart;
 use App\Models\UploadPersyaratan;
 use App\Models\MasterDokumenSyarat;
 use App\Models\Perusahaan;

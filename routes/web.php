@@ -91,6 +91,8 @@ Route::post('/reset-password', function (Request $request) {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware('auth');
+
+
     Route::resource('users', UserController::class);
 
     //superadmin
