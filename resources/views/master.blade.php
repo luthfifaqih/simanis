@@ -2994,8 +2994,86 @@
     <!--end::Modal - Users Search-->
     <!--end::Modals-->
     <!--begin::Javascript-->
-    <script>
-        var hostUrl = "assets/";
+    <!-- Firebase App (the core Firebase SDK) -->
+    {{-- <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <!-- Firebase Messaging -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js"></script>
+    <!-- Firebase Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js"></script> --}}
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import {
+            initializeApp
+        } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js';
+        import {
+            getMessaging,
+            getToken
+        } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-messaging.js';
+        import {
+            getAnalytics
+        } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-analytics.js';
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDG3s0JgopFSWtadJGePWVwdnZjuVo9Yjs",
+            authDomain: "simanis-1715145390028.firebaseapp.com",
+            projectId: "simanis-1715145390028",
+            storageBucket: "simanis-1715145390028.appspot.com",
+            messagingSenderId: "139347577663",
+            appId: "1:139347577663:web:4c6545bf25183af476618a",
+            measurementId: "G-5V8CCR465E"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        // Initialize Analytics
+        const analytics = getAnalytics(app);
+
+        // Initialize Messaging
+        const messaging = getMessaging(app);
+
+        // Request permission to receive notifications
+        function requestPermission() {
+            return Notification.requestPermission().then((permission) => {
+                if (permission === 'granted') {
+                    console.log('Notification permission granted.');
+                    fetchToken(); // Fetch token after permission is granted
+                } else {
+                    console.log('Unable to get permission to notify.');
+                }
+            });
+        }
+
+        // Get registration token
+        function fetchToken() {
+            return getToken(messaging).then((currentToken) => {
+                if (currentToken) {
+                    // Send the token to your server and update the UI if necessary
+                    console.log('Current token:', currentToken);
+                } else {
+                    // Show permission request UI
+                    console.log('No registration token available. Request permission to generate one.');
+                }
+            }).catch((err) => {
+                console.log('An error occurred while retrieving token. ', err);
+            });
+        }
+
+        // Check for messaging support and request permission
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/firebase-messaging-sw.js')
+                .then((registration) => {
+                    console.log('Service Worker registered:', registration);
+                    // Attach the messaging service to the service worker
+
+                    requestPermission();
+                }).catch((err) => {
+                    console.error('Service worker registration failed, error:', err);
+                });
+        } else {
+            console.log('Service workers are not supported in this browser.');
+        }
     </script>
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
 
