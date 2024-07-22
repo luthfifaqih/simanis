@@ -12,4 +12,10 @@ class UploadPersyaratan extends Model
     protected $table = 'upload_persyaratans';
 
     protected $guarded = [''];
+
+
+    public function perusahaan()
+    {
+        return $this->oneToMany(Perusahaan::class, 'perusahaan');
+    }
 }

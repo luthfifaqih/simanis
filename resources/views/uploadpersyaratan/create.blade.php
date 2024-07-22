@@ -125,6 +125,8 @@
                                                             <input type="file" class="form-control form-control-solid"
                                                                 name="{{ $value->kode }}" accept="application/pdf"
                                                                 {{ $value->required == 1 ? 'required' : '' }} />
+                                                            <span class="text-danger">* format PDF, ukuran maksimal 2
+                                                                MB</span>
                                                         </div>
                                                     @endforeach
                                                 </div>
@@ -218,6 +220,8 @@
                                                             <input type="file" class="form-control form-control-solid"
                                                                 name="{{ $value->kode }}" accept="application/pdf"
                                                                 {{ $value->required == 1 ? 'required' : '' }} />
+                                                            <span class="text-danger">* format PDF, ukuran maksimal 2
+                                                                MB</span>
                                                         </div>
                                                     @endforeach
                                                 </div>
@@ -252,6 +256,8 @@
                                                             <input type="file" class="form-control form-control-solid"
                                                                 name="{{ $value->kode }}" accept="application/pdf"
                                                                 {{ $value->required == 1 ? 'required' : '' }} />
+                                                            <span class="text-danger">* format PDF, ukuran maksimal 2
+                                                                MB</span>
                                                         </div>
                                                     @endforeach
                                                 </div>
@@ -307,6 +313,22 @@
                                 });
                             }
                         </script> --}}
+                        <script>
+                            // Element to indecate
+                            var button = document.querySelector("#btn-simpan");
+
+                            // Handle button click event
+                            button.addEventListener("click", function() {
+                                // Activate indicator
+                                button.setAttribute("data-kt-indicator", "on");
+
+                                // Disable indicator after 3 seconds
+                                setTimeout(function() {
+                                    button.removeAttribute("data-kt-indicator");
+                                }, 3000);
+                            });
+                        </script>
+
                         <script>
                             // document.addEventListener('DOMContentLoaded', function() {
                             // Stepper lement

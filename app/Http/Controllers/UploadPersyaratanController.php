@@ -214,12 +214,26 @@ class UploadPersyaratanController extends Controller
         }
     }
 
-    public function reject($id)
+    public function reject(Request $request, $id)
     {
-        $perusahaan = Perusahaan::find($id);
-        if ($perusahaan) {
+
+        $perusahaan = Perusahaan::findOrFail($id);
+        $upload = DB::table('upload_persyaratans')
+            ->join('perusahaan', 'upload_persyaratans.perusahaan_id', '=', 'perusahaan.id')
+            ->select('upload_persyaratans.perusahaan_id', 'upload_persyaratans.catatan', 'perusahaan.status')
+            ->where('upload_persyaratans.perusahaan_id', $id)
+            ->first();
+
+        if ($upload) {
+            // Update the status in the perusahaans table
             $perusahaan->status = 'ditolak';
             $perusahaan->save();
+
+            // Update the catatan in the upload_persyaratans table
+            DB::table('upload_persyaratans')
+                ->where('perusahaan_id', $id)
+                ->update(['catatan' =>  $request->catatan]);
+            // dd($request->all());
 
             return redirect()->route('verifikasi.riwayat')->with('success', 'Dokumen berhasil ditolak.');
         } else {

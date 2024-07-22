@@ -7,6 +7,8 @@
                 <div class="card">
                     <div class="card-body bg-white" style="border-radius: 5px">
                         <!--begin::Form-->
+                        <div class="separator separator-dotted separator-content border-dark my-10"><span
+                                class="h6">Detail Identitas</span></div>
                         <!--begin::Input group-->
                         <div class="row">
                             <div class="col-lg-4">
@@ -87,7 +89,7 @@
                             </div>
                         </div>
                         <div class="separator separator-dotted separator-content border-dark my-15"><span
-                                class="h6">Berkas Persyaratan</span></div>
+                                class="h6">Berkas-berkas Persyaratan</span></div>
                         <!--end::Input group-->
                         <div class="row">
                             @foreach ($upload as $data)
@@ -131,62 +133,91 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Modal -->
+                                    <div class="modal fade" tabindex="-1" id="kt_modal_2">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <!--begin::Close-->
+                                                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
+                                                        data-bs-dismiss="modal" aria-label="Close">
+                                                        <i class="ki-duotone ki-cross fs-1">
+                                                            <span class="path1"></span><span class="path2"></span>
+                                                        </i>
+                                                    </div>
+                                                    <!--end::Close-->
+                                                </div>
+                                                <form action="{{ route('verifikasi.reject', $perusahaan->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <div class="modal-body">
+                                                        <textarea class="form-control" id="catatan_penolakan" name="catatan" rows="5" placeholder="Masukan catatan"></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+
+                                                        <button type="button" class="btn btn-warning"
+                                                            data-bs-dismiss="modal">Tutup</button>
+
+                                                        <button type="submit" class="btn btn-danger"
+                                                            onclick="handleAction('rejected')">Ditolak</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            @endforeach
                         </div>
-
-                        <!--begin::Input group-->
-                        <div id="actionButtons" class="d-none d-flex gap-2 mt-5">
-                            <form action="{{ route('verifikasi.verify', $perusahaan->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-success"
-                                    onclick="handleAction('accepted')">Diterima</button>
-                            </form>
-                            <form action="{{ route('verifikasi.reject', $perusahaan->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-danger"
-                                    onclick="handleAction('rejected')">Ditolak</button>
-                            </form>
-                        </div>
-
-                        <script>
-                            const totalDocuments = {{ count($upload) }};
-                            let viewedDocuments = 0;
-
-                            function liatberkas(file, nama_dokumen, kode) {
-                                $("#kt_modal_1").modal('show')
-                                var path = `{{ Storage::disk('public')->url('${kode}/${file}') }}`
-                                var url = `{{ url('pdf-viewer') }}?file=${path}`
-                                console.log(path);
-                                $("#iframedok").attr("src", url)
-
-                                viewedDocuments++;
-                                if (viewedDocuments === totalDocuments) {
-                                    document.getElementById('actionButtons').classList.remove('d-none');
-                                }
-                            }
-
-                            function handleAction(action) {
-                                if (action === 'accepted') {
-                                    //handle acepted action
-                                    Swal.fire({
-                                        title: "Berhasil",
-                                        text: "Data berhasil diverifikasi",
-                                        icon: "success"
-                                    });
-                                } else if (action === 'rejected') {
-                                    //handle rejected action
-                                    Swal.fire({
-                                        title: "Berhasil",
-                                        text: "Data berhasil ditolak",
-                                        icon: "success"
-                                    });
-                                }
-                            }
-                        </script>
+                        @endforeach
                     </div>
+
+                    <!--begin::Input group-->
+                    <div id="actionButtons" class="d-none d-flex gap-2 mt-5">
+                        <form action="{{ route('verifikasi.verify', $perusahaan->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-success"
+                                onclick="handleAction('accepted')">Diterima</button>
+                        </form>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#kt_modal_2">Ditolak</button>
+                    </div>
+
+                    <script>
+                        const totalDocuments = {{ count($upload) }};
+                        let viewedDocuments = 0;
+
+                        function liatberkas(file, nama_dokumen, kode) {
+                            $("#kt_modal_1").modal('show')
+                            var path = `{{ Storage::disk('public')->url('${kode}/${file}') }}`
+                            var url = `{{ url('pdf-viewer') }}?file=${path}`
+                            console.log(path);
+                            $("#iframedok").attr("src", url)
+
+                            viewedDocuments++;
+                            if (viewedDocuments === totalDocuments) {
+                                document.getElementById('actionButtons').classList.remove('d-none');
+                            }
+                        }
+
+                        function handleAction(action) {
+                            if (action === 'accepted') {
+                                //handle acepted action
+                                Swal.fire({
+                                    title: "Berhasil",
+                                    text: "Data berhasil diverifikasi",
+                                    icon: "success"
+                                });
+                            } else if (action === 'rejected') {
+                                //handle rejected action
+                                Swal.fire({
+                                    title: "Berhasil",
+                                    text: "Data berhasil ditolak",
+                                    icon: "success"
+                                });
+                            }
+                        }
+                    </script>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection

@@ -67,15 +67,15 @@
 
                         switch (data) {
                             case 'menunggu_verifikasi':
-                                badgeClass = 'badge badge-light-warning';
+                                badgeClass = 'badge badge-warning';
                                 badgeText = 'Menunggu verifikasi';
                                 break;
                             case 'terverifikasi':
-                                badgeClass = 'badge badge-light-success';
+                                badgeClass = 'badge badge-success';
                                 badgeText = 'Terverifikasi';
                                 break;
                             case 'ditolak':
-                                badgeClass = 'badge badge-light-danger';
+                                badgeClass = 'badge badge-danger';
                                 badgeText = 'Ditolak';
                                 break;
                             default:
