@@ -133,7 +133,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Modal -->
+                                    <!-- Modal Reject Catatan-->
                                     <div class="modal fade" tabindex="-1" id="kt_modal_2">
                                         <div class="modal-dialog">
                                             <div class="modal-content">

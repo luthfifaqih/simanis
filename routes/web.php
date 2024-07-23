@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DetailPersController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\PdfViewersController;
 use App\Http\Controllers\UploadPersyaratanController;
@@ -132,6 +133,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('uploadpersyaratan', [UploadPersyaratanController::class, 'index'])->name('uploadpersyaratan.index');
     Route::post('uploadpersyaratan', [UploadPersyaratanController::class, 'store'])->name('uploadpersyaratan.store');
     Route::get('uploadpersyaratan/create', [UploadPersyaratanController::class, 'create'])->name('uploadpersyaratan.create');
+    Route::get('pers/{id}/detail', [DetailPersController::class, 'detailPers'])->name('pers.detail');
 });
 
 // Route::middleware(['auth'])->group(function () {
