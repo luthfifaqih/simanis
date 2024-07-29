@@ -46,6 +46,8 @@
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
     <link href="{{ asset('frontend/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('frontend/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('frontend/src/sass/components/_variables.scss') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/src/sass/components/_nav.scss') }}">
     <!--end::Global Stylesheets Bundle-->
 
 </head>

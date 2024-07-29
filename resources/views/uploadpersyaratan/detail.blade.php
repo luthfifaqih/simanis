@@ -6,6 +6,11 @@
             <div id="kt_content_container" class="container-xxl">
                 <div class="card">
                     <div class="card-body bg-white" style="border-radius: 5px">
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('verifikasi.review') }}" class="btn btn-info me-5">
+                                <i class="bi bi-arrow-left"></i> Kembali
+                            </a>
+                        </div>
                         <!--begin::Form-->
                         <div class="separator separator-dotted separator-content border-dark my-10"><span
                                 class="h6">Detail Identitas</span></div>

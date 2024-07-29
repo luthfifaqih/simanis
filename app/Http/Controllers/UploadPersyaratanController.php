@@ -267,4 +267,68 @@ class UploadPersyaratanController extends Controller
             'Content-Type' => 'application/pdf',
         ]);
     }
+
+    public function reUploadStore(Request $request, $id)
+    {
+        //hapus file sebelumnya
+        $upload_dokumen = UploadPersyaratan::where('perusahaan_id', $id)->get();
+        foreach ($upload_dokumen as $key => $value) {
+            if ($value->file != null) {
+                Storage::disk('public')->delete($value->file);
+            }
+        }
+
+        //join data
+        $upload = Perusahaan::findOrFail($id);
+        $upload = DB::table('upload_persyaratans')
+            ->join('perusahaan', 'upload_persyaratans.perusahaan_id', '=', 'perusahaan.id')
+            ->select('upload_persyaratans.perusahaan_id', 'perusahaan.status')
+            ->where('upload_persyaratans.perusahaan_id', $id)
+            ->first();
+
+        //logika proses
+        if ($upload->status == 'ditolak') {
+            $dokumen = MasterDokumenSyarat::all();
+            foreach ($dokumen as $key => $value) {
+                if ($value->required == 1) {
+                    $validasi[$value->kode] = 'required|file|mimes:pdf|max:2048';
+                }
+            }
+            $request->validate($validasi);
+
+            $id_perusahaan = $upload->id;
+
+            foreach ($dokumen as $key => $value) {
+
+                if ($request->hasFile("$value->kode")) {
+                    $file = $request->file("$value->kode");
+                    $filename = time() . '.' . $file->getClientOriginalExtension();
+                    $file->storeAs('public/' . $value->kode, $filename);
+                    $upload_dokumen = new UploadPersyaratan([
+                        'perusahaan_id' => $id_perusahaan,
+                        'dokumensyarat_id' => $value->id,
+                        'status' => $request->status,
+                        'file' => $filename,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                        'updated_by' => Auth::id(),
+                    ]);
+                    $upload_dokumen->save();
+                }
+            }
+
+            // dd($dokumen);
+
+            $perusahaan = Perusahaan::findOrFail($upload->perusahaan_id);
+            $perusahaan->status = 'menunggu_verifikasi';
+            $perusahaan->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Re-upload Persyaratan Berhasil',
+                'url' => route('uploadpersyaratan.index')
+            ]);
+        } else {
+            abort(404, 'Berkas sudah diupload atau belum ditolak');
+        }
+    }
 }

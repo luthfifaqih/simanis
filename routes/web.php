@@ -130,9 +130,10 @@ Route::group(['middleware' => 'auth'], function () {
     //pers
     Route::middleware(['role:pers'], function () {
     });
-    Route::get('uploadpersyaratan', [UploadPersyaratanController::class, 'index'])->name('uploadpersyaratan.index');
-    Route::post('uploadpersyaratan', [UploadPersyaratanController::class, 'store'])->name('uploadpersyaratan.store');
-    Route::get('uploadpersyaratan/create', [UploadPersyaratanController::class, 'create'])->name('uploadpersyaratan.create');
+    Route::post('/uploadpersyaratan/{id}/reupload', [UploadPersyaratanController::class, 'reUploadStore'])->name('reupload.store');
+    Route::get('uploadpersyaratan', [UploadPersyaratanController::class, 'index'])->name('uploadpersyaratan.index'); //riwayat page upload
+    Route::post('uploadpersyaratan', [UploadPersyaratanController::class, 'store'])->name('uploadpersyaratan.store'); //logika upload
+    Route::get('uploadpersyaratan/create', [UploadPersyaratanController::class, 'create'])->name('uploadpersyaratan.create'); //view form upload
     Route::get('pers/{id}/detail', [DetailPersController::class, 'detailPers'])->name('pers.detail');
 });
 
