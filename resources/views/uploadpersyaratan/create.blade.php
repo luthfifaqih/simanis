@@ -325,7 +325,7 @@
                                 // Disable indicator after 3 seconds
                                 setTimeout(function() {
                                     button.removeAttribute("data-kt-indicator");
-                                }, 3000);
+                                }, 5000);
                             });
                         </script>
 

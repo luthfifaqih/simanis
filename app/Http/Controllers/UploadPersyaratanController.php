@@ -7,9 +7,11 @@ use App\Models\UploadPersyaratan;
 use App\Models\MasterDokumenSyarat;
 use App\Models\Perusahaan;
 use Barryvdh\DomPDF\PDF;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
@@ -83,7 +85,7 @@ class UploadPersyaratanController extends Controller
 
             if ($request->hasFile("$value->kode")) {
                 $file = $request->file("$value->kode");
-                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $filename = "PENGAJUAN" . "-" . $value->kode . "-" . time() . '.' . $file->getClientOriginalExtension();
                 $file->storeAs('public/' . $value->kode, $filename);
                 $upload_dokumen = new UploadPersyaratan([
                     'perusahaan_id' => $id_perusahaan,
@@ -268,67 +270,64 @@ class UploadPersyaratanController extends Controller
         ]);
     }
 
+    // Upload ulang Persyaratan
     public function reUploadStore(Request $request, $id)
     {
-        //hapus file sebelumnya
-        $upload_dokumen = UploadPersyaratan::where('perusahaan_id', $id)->get();
-        foreach ($upload_dokumen as $key => $value) {
-            if ($value->file != null) {
-                Storage::disk('public')->delete($value->file);
-            }
-        }
+        DB::beginTransaction();
+        try {
+            // Join the necessary tables and select required columns
+            $join_dokumen = DB::table('upload_persyaratans')
+                ->join('m_dokumensyarat', 'upload_persyaratans.dokumensyarat_id', '=', 'm_dokumensyarat.id')
+                ->join('perusahaan', 'upload_persyaratans.perusahaan_id', '=', 'perusahaan.id')
+                ->select(
+                    'upload_persyaratans.perusahaan_id',
+                    'upload_persyaratans.dokumensyarat_id',
+                    'upload_persyaratans.file',
+                    'm_dokumensyarat.kode',
+                    'perusahaan.status'
+                )
+                ->where('upload_persyaratans.perusahaan_id', $id)
+                ->get();
 
-        //join data
-        $upload = Perusahaan::findOrFail($id);
-        $upload = DB::table('upload_persyaratans')
-            ->join('perusahaan', 'upload_persyaratans.perusahaan_id', '=', 'perusahaan.id')
-            ->select('upload_persyaratans.perusahaan_id', 'perusahaan.status')
-            ->where('upload_persyaratans.perusahaan_id', $id)
-            ->first();
-
-        //logika proses
-        if ($upload->status == 'ditolak') {
-            $dokumen = MasterDokumenSyarat::all();
-            foreach ($dokumen as $key => $value) {
-                if ($value->required == 1) {
-                    $validasi[$value->kode] = 'required|file|mimes:pdf|max:2048';
+            // Loop through each document and handle file updates
+            foreach ($join_dokumen as $value) {
+                // Delete existing file
+                if ($value->file) {
+                    Storage::delete('public/' . $value->kode . '/' . $value->file);
                 }
-            }
-            $request->validate($validasi);
+                // dd($value->kode);
+                // dd($request->hasFile($value->kode));
+                if ($request->hasFile($value->kode)) {
 
-            $id_perusahaan = $upload->id;
+                    // Handle the new file upload
+                    $file = $request->file($value->kode);
 
-            foreach ($dokumen as $key => $value) {
-
-                if ($request->hasFile("$value->kode")) {
-                    $file = $request->file("$value->kode");
-                    $filename = time() . '.' . $file->getClientOriginalExtension();
+                    $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->storeAs('public/' . $value->kode, $filename);
-                    $upload_dokumen = new UploadPersyaratan([
-                        'perusahaan_id' => $id_perusahaan,
-                        'dokumensyarat_id' => $value->id,
-                        'status' => $request->status,
-                        'file' => $filename,
-                        'updated_at' => date('Y-m-d H:i:s'),
-                        'updated_by' => Auth::id(),
-                    ]);
-                    $upload_dokumen->save();
+
+
+                    // Update the existing record
+                    Perusahaan::where('id', $value->perusahaan_id)->update(['status' => 'menunggu_verifikasi']);
+
+                    UploadPersyaratan::where('perusahaan_id', $value->perusahaan_id)
+                        ->where('dokumensyarat_id', $value->dokumensyarat_id)
+                        ->update([
+                            'file' => $filename,
+                            'updated_at' => now(),
+                        ]);
                 }
             }
 
-            // dd($dokumen);
+            // Commit the transaction if all updates are successful
+            DB::commit();
 
-            $perusahaan = Perusahaan::findOrFail($upload->perusahaan_id);
-            $perusahaan->status = 'menunggu_verifikasi';
-            $perusahaan->save();
+            return redirect()->route('uploadpersyaratan.index')->with('success', 'File berhasil diunggah');
+        } catch (\Throwable $th) {
+            // Rollback the transaction in case of an error
+            DB::rollBack();
+            Log::error('Error in reUploadStore: ' . $th->getMessage());
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Re-upload Persyaratan Berhasil',
-                'url' => route('uploadpersyaratan.index')
-            ]);
-        } else {
-            abort(404, 'Berkas sudah diupload atau belum ditolak');
+            return redirect()->route('uploadpersyaratan.index')->with('error', 'Terjadi kesalahan saat mengunggah file');
         }
     }
 }

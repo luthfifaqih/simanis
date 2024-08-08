@@ -10,6 +10,11 @@
                     <div class="card">
                         <div class="card-body bg-white" style="border-radius: 5px">
                             @if ($perusahaan->status === 'ditolak')
+                                <div class="d-flex justify-content-between">
+                                    <a href="{{ route('uploadpersyaratan.index') }}" class="btn btn-info me-5">
+                                        <i class="bi bi-arrow-left"></i> Kembali
+                                    </a>
+                                </div>
                                 <!-- Begin::Re-upload Form -->
                                 <div class="separator separator-dotted separator-content border-dark my-10"><span
                                         class="h6">Re-Upload Berkas</span></div>
@@ -17,17 +22,22 @@
                                 <form action="{{ route('reupload.store', $perusahaan->id) }}" method="POST"
                                     enctype="multipart/form-data" class="row row-cols-2">
                                     @csrf
-                                    @foreach ($upload as $data)
+                                    @foreach ($join_dokumen as $data)
                                         <div class="col mb-5">
                                             <label class="required fw-semibold fs-6 mb-2">{{ $data->nama_dokumen }}</label>
-                                            <input type="file" name="file[{{ $data->id }}]" accept="application/pdf"
+                                            <input type="file" name="{{ $data->kode }}" accept="application/pdf"
                                                 class="form-control form-control-solid">
                                         </div>
                                     @endforeach
                                     <div class="mb-5">
                                         <div class="d-flex justify-content-between align-items-center me-5">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit" class="btn btn-primary" id="btn-simpan"
+                                                onclick="handleAction('accepted')">Simpan</button>
                                         </div>
+                                        <span class="indicator-progress">
+                                            Please wait... <span
+                                                class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
                                     </div>
                                 </form>
 
@@ -205,7 +215,7 @@
                             @endforeach
                         </div>
                         <!-- Begin::Action Buttons -->
-                        <div id="actionButtons" class="d-none d-flex gap-2 mt-5">
+                        {{-- <div id="actionButtons" class="d-none d-flex gap-2 mt-5">
                             <form action="{{ route('verifikasi.verify', $perusahaan->id) }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-success"
@@ -213,7 +223,7 @@
                             </form>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                 data-bs-target="#kt_modal_2">Ditolak</button>
-                        </div>
+                        </div> --}}
                         <!-- End::Action Buttons -->
                         @endif
                     </div>
@@ -239,20 +249,26 @@
             document.getElementById('actionButtons').classList.remove('d-none');
         }
     }
-
+</script>
+<script>
     function handleAction(action) {
         if (action === 'accepted') {
-            Swal.fire({
-                title: "Berhasil",
-                text: "Data berhasil diverifikasi",
-                icon: "success"
-            });
-        } else if (action === 'rejected') {
-            Swal.fire({
-                title: "Berhasil",
-                text: "Data berhasil ditolak",
-                icon: "success"
-            });
+            // Validasi apakah file diisi
+            const fileInput = document.getElementById('file');
+            if (fileInput.files.length === 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'File tidak boleh kosong.',
+                });
+                return;
+            } else {
+                Swal.fire({
+                    title: "Berhasil",
+                    text: "Data berhasil diajukan kembali",
+                    icon: "success"
+                });
+            }
         }
     }
 </script>

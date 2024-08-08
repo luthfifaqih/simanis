@@ -19,7 +19,21 @@ class DetailPersController extends Controller
             ->whereColumn('m_dokumensyarat.id', '=', 'upload_persyaratans.dokumensyarat_id')
             ->where('upload_persyaratans.perusahaan_id',  $id)
             ->get();
+        $join_dokumen = DB::table('upload_persyaratans')
+            ->join('m_dokumensyarat', 'upload_persyaratans.dokumensyarat_id', '=', 'm_dokumensyarat.id')
+            ->join('perusahaan', 'upload_persyaratans.perusahaan_id', '=', 'perusahaan.id')
+            ->select(
+                'upload_persyaratans.perusahaan_id',
+                'upload_persyaratans.dokumensyarat_id',
+                'upload_persyaratans.file',
+                'm_dokumensyarat.kode',
+                'm_dokumensyarat.nama_dokumen',
+                'perusahaan.status'
+            )
+            ->where('upload_persyaratans.perusahaan_id', $id)
+            ->get();
 
-        return view('pers.detailpers', $title, compact('upload', 'perusahaan'));
+
+        return view('pers.detailpers', $title, compact('perusahaan', 'join_dokumen', 'upload'));
     }
 }
