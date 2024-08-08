@@ -20,19 +20,20 @@
                                         class="h6">Re-Upload Berkas</span></div>
 
                                 <form action="{{ route('reupload.store', $perusahaan->id) }}" method="POST"
-                                    enctype="multipart/form-data" class="row row-cols-2">
+                                    enctype="multipart/form-data" class="row row-cols-2" id="reuploadForm">
                                     @csrf
                                     @foreach ($join_dokumen as $data)
                                         <div class="col mb-5">
                                             <label class="required fw-semibold fs-6 mb-2">{{ $data->nama_dokumen }}</label>
                                             <input type="file" name="{{ $data->kode }}" accept="application/pdf"
-                                                class="form-control form-control-solid">
+                                                class="form-control form-control-solid file-input"
+                                                id="file-{{ $data->kode }}">
                                         </div>
                                     @endforeach
                                     <div class="mb-5">
                                         <div class="d-flex justify-content-between align-items-center me-5">
                                             <button type="submit" class="btn btn-primary" id="btn-simpan"
-                                                onclick="handleAction('accepted')">Simpan</button>
+                                                onclick="handleAction(event)">Simpan</button>
                                         </div>
                                         <span class="indicator-progress">
                                             Please wait... <span
@@ -251,24 +252,34 @@
     }
 </script>
 <script>
-    function handleAction(action) {
-        if (action === 'accepted') {
-            // Validasi apakah file diisi
-            const fileInput = document.getElementById('file');
-            if (fileInput.files.length === 0) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Perhatian',
-                    text: 'File tidak boleh kosong.',
-                });
-                return;
-            } else {
-                Swal.fire({
-                    title: "Berhasil",
-                    text: "Data berhasil diajukan kembali",
-                    icon: "success"
-                });
+    function handleAction(event) {
+        event.preventDefault(); // Prevent the form from submitting immediately
+
+        let allFilesFilled = true;
+        const fileInputs = document.querySelectorAll('.file-input');
+
+        fileInputs.forEach(function(input) {
+            if (input.files.length === 0) {
+                allFilesFilled = false;
             }
+        });
+
+        if (!allFilesFilled) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Perhatian',
+                text: 'Semua file harus diisi.',
+            });
+        } else {
+            Swal.fire({
+                title: "Berhasil",
+                text: "Data berhasil diajukan kembali",
+                icon: "success"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('reuploadForm').submit(); // Submit the form if the user confirms
+                }
+            });
         }
     }
 </script>
